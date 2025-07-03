@@ -105,3 +105,19 @@ export type INewPortadorResDTO = {
   nomeEmbossing: string;
   conta: string;
 };
+
+// --- TRANSFERENCIAS --- //
+export type ITransferByProxyDTO = {
+  idProxy: string;
+  body: {
+    linhaOrigem: number;
+    linhaDestino: number;
+    valorTransferencia: number;
+  };
+};
+
+export type ITransferByProxyResDTO = {
+  dataHora: string;
+  trace: number;
+  valorTransferido: number;
+};

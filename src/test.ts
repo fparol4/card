@@ -27,10 +27,19 @@ import { newPortadorDTO } from "./greecale/misc/portador";
   // logger({ decrypted });
 
   // --- portador (card-holder) ---
-  newPortadorDTO.cpf = "24406570004";
-  const novo_portador = await client.portador.add(newPortadorDTO, options);
-  logger({ novo_portador });
+  // newPortadorDTO.cpf = "24406570004";
+  // const novo_portador = await client.portador.add(newPortadorDTO, options);
+  // logger({ novo_portador });
 
   // const portador = await client.portador.getById("1014500000226001", options);
   // logger({ portador });
+
+  // const transfere = await client.transactions.transferByProxy({
+  //   idProxy: "1014500000226001",
+  //   body: {
+  //     linhaDestino: 100,
+  //     linhaOrigem: 100,
+  //     valorTransferencia: 200,
+  //   },
+  // });
 })();
