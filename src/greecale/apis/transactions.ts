@@ -25,7 +25,7 @@ import {
   ITransacaoMultiSaldoPorProxyResDTO,
   ITransacaoMultiSaldoPorCartaoResDTO,
   ITransacaoPorCartaoResDTO,
-} from "../types";
+} from "../types/common";
 
 export class APITransaction {
   constructor(public client: AxiosInstance) {}

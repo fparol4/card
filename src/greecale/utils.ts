@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { SDKRequestOptions } from "./types";
+import { SDKRequestOptions } from "./types/common";
 
 export const logger = console.log;
 

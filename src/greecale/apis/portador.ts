@@ -1,19 +1,21 @@
 import { AxiosInstance } from "axios";
-import {
-  INewPortadorDTO,
-  INewPortadorResDTO,
-  SDKRequestOptions,
-} from "../types";
+import { SDKRequestOptions } from "../types/common";
 import { requestOptions } from "../utils";
 import { SDKError } from "@src/shared/error";
+
+import {
+  IAddPortadorDTO,
+  IPortadorDTO,
+  IUpdatePortadorDTO,
+} from "../types/portador.types";
 
 export class APIPortador {
   constructor(public client: AxiosInstance) {}
 
-  public async getById(id: string, options?: SDKRequestOptions) {
+  public async getByProxy(proxy: string, options?: SDKRequestOptions) {
     try {
-      const { data } = await this.client.get(
-        `/portador/proxy/${id}`,
+      const { data } = await this.client.get<IPortadorDTO>(
+        `/portador/proxy/${proxy}`,
         requestOptions(options),
       );
 
@@ -23,10 +25,62 @@ export class APIPortador {
     }
   }
 
-  public async add(payload: INewPortadorDTO, options?: SDKRequestOptions) {
+  public async getByCardnumber(number: string, options?: SDKRequestOptions) {
     try {
-      const { data } = await this.client.post<INewPortadorResDTO>(
+      const { data } = await this.client.get<IPortadorDTO>(
+        `/portador/cartao/${number}`,
+        requestOptions(options),
+      );
+
+      return data;
+    } catch (error) {
+      throw new SDKError("Portador > getById", error);
+    }
+  }
+
+  public async addPortador(
+    payload: IAddPortadorDTO,
+    options?: SDKRequestOptions,
+  ) {
+    try {
+      const { data } = await this.client.post<IAddPortadorDTO>(
         `/portador`,
+        payload,
+        requestOptions(options),
+      );
+
+      return data;
+    } catch (error) {
+      throw new SDKError("Portador > getById", error);
+    }
+  }
+
+  public async updateByProxy(
+    proxy: string,
+    payload: IUpdatePortadorDTO,
+    options?: SDKRequestOptions,
+  ) {
+    try {
+      const { data } = await this.client.post<void>(
+        `/portador/proxy/${proxy}`,
+        payload,
+        requestOptions(options),
+      );
+
+      return data;
+    } catch (error) {
+      throw new SDKError("Portador > getById", error);
+    }
+  }
+
+  public async updateByCardnumber(
+    number: string,
+    payload: IUpdatePortadorDTO,
+    options?: SDKRequestOptions,
+  ) {
+    try {
+      const { data } = await this.client.post<void>(
+        `/portador/cartao/${number}`,
         payload,
         requestOptions(options),
       );

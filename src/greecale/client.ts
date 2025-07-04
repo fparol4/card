@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 
 import { SDKError } from "@src/shared/error";
-import { SDKAuthResDTO, SDKParams } from "./types";
+import { SDKAuthResDTO, SDKParams } from "./types/common";
 
 import { logger, requestOptions } from "./utils";
 import { APICrypt } from "./apis/crypt";
