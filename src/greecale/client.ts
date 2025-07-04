@@ -11,8 +11,8 @@ import { APITransaction } from "./apis/transactions";
 import { APICartao } from "./apis/cartao";
 
 export class SDKClient {
-  public params: SDKParams;
-  public client: AxiosInstance;
+  private params: SDKParams;
+  private client: AxiosInstance;
 
   public crypto: APICrypt;
   public portador: APIPortador;

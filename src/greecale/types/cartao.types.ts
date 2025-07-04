@@ -1,10 +1,10 @@
 export type GreecaleCardDTO = {
   proxy: string;
   nome: string;
-  tipoDocumento: 1;
-  documento: "80164809007";
-  status: 1;
-  descricaoStatus: "CARTAO APROVADO";
+  tipoDocumento: number;
+  documento: string;
+  status: number;
+  descricaoStatus: string;
 };
 
 export type GrecaleCardSensitiveDTO = {

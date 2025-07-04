@@ -1,31 +1,32 @@
 import { AxiosInstance } from "axios";
 import { requestOptions } from "../utils";
 import { SDKError } from "@src/shared/error";
+import { SDKRequestOptions } from "../types/common";
+
 import {
   ITransferByProxyDTO,
-  SDKRequestOptions,
   ITransferByCardDTO,
   ITransferResDTO,
-  IEstornoResDTO,
   IEstornoDTO,
+  IEstornoResDTO,
   IEstornoCartaoDTO,
-  IDescargaPrePagoProxyResDTO,
   IDescargaPrePagoProxyDTO,
-  ICargaProxyResDTO,
+  IDescargaPrePagoProxyResDTO,
   ICargaProxyDTO,
-  ICargaCartaoResDTO,
+  ICargaProxyResDTO,
   ICargaCartaoDTO,
-  IAutorizacaoProxyResDTO,
+  ICargaCartaoResDTO,
   IAutorizacaoProxyDTO,
-  IAutorizacaoParceladaProxyResDTO,
+  IAutorizacaoProxyResDTO,
   IAutorizacaoParceladaProxyDTO,
+  IAutorizacaoParceladaProxyResDTO,
   IAutorizacaoCartaoDTO,
   IAutorizacaoCartaoResDTO,
   ITransacaoPorProxyResDTO,
   ITransacaoMultiSaldoPorProxyResDTO,
   ITransacaoMultiSaldoPorCartaoResDTO,
   ITransacaoPorCartaoResDTO,
-} from "../types/common";
+} from "../types/transaction.types";
 
 export class APITransaction {
   constructor(public client: AxiosInstance) {}
@@ -240,7 +241,9 @@ export class APITransaction {
         ...(params.dataFim ? { dataFim: params.dataFim } : {}),
       }).toString();
 
-      const { data } = await this.client.get<ITransacaoMultiSaldoPorProxyResDTO[]>(
+      const { data } = await this.client.get<
+        ITransacaoMultiSaldoPorProxyResDTO[]
+      >(
         `/transacoes/multi-saldo/proxy/${params.proxy}${query ? `?${query}` : ""}`,
         requestOptions(options),
       );
@@ -264,7 +267,9 @@ export class APITransaction {
         ...(params.dataFim ? { dataFim: params.dataFim } : {}),
       }).toString();
 
-      const { data } = await this.client.get<ITransacaoMultiSaldoPorCartaoResDTO[]>(
+      const { data } = await this.client.get<
+        ITransacaoMultiSaldoPorCartaoResDTO[]
+      >(
         `/transacoes/multi-saldo/cartao/${params.numeroCartao}${query ? `?${query}` : ""}`,
         requestOptions(options),
       );

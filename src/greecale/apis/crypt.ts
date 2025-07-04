@@ -5,7 +5,7 @@ import { requestOptions } from "../utils";
 import { SDKError } from "@src/shared/error";
 
 export class APICrypt {
-  constructor(public client: AxiosInstance) {}
+  constructor(private client: AxiosInstance) {}
 
   public async getAESKey(options?: SDKRequestOptions): Promise<AESKey> {
     try {

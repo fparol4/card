@@ -10,25 +10,12 @@ import {
 } from "../types/portador.types";
 
 export class APIPortador {
-  constructor(public client: AxiosInstance) {}
+  constructor(private client: AxiosInstance) {}
 
   public async getByProxy(proxy: string, options?: SDKRequestOptions) {
     try {
       const { data } = await this.client.get<IPortadorDTO>(
         `/portador/proxy/${proxy}`,
-        requestOptions(options),
-      );
-
-      return data;
-    } catch (error) {
-      throw new SDKError("Portador > getById", error);
-    }
-  }
-
-  public async getByCardnumber(number: string, options?: SDKRequestOptions) {
-    try {
-      const { data } = await this.client.get<IPortadorDTO>(
-        `/portador/cartao/${number}`,
         requestOptions(options),
       );
 
@@ -63,24 +50,6 @@ export class APIPortador {
     try {
       const { data } = await this.client.post<void>(
         `/portador/proxy/${proxy}`,
-        payload,
-        requestOptions(options),
-      );
-
-      return data;
-    } catch (error) {
-      throw new SDKError("Portador > getById", error);
-    }
-  }
-
-  public async updateByCardnumber(
-    number: string,
-    payload: IUpdatePortadorDTO,
-    options?: SDKRequestOptions,
-  ) {
-    try {
-      const { data } = await this.client.post<void>(
-        `/portador/cartao/${number}`,
         payload,
         requestOptions(options),
       );

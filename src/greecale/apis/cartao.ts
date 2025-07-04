@@ -11,8 +11,8 @@ import {
 
 export class APICartao {
   constructor(
-    public client: AxiosInstance,
-    public crypto: APICrypt,
+    private client: AxiosInstance,
+    private crypto: APICrypt,
   ) {
     this.crypto = new APICrypt(client);
   }
