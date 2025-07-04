@@ -11,3 +11,8 @@ export const requestOptions = (options?: SDKRequestOptions) => {
     },
   };
 };
+
+export const removeAttributes = (payload: any, attributes: string[]) => {
+  attributes.forEach((k) => delete payload[k]);
+  return payload;
+};

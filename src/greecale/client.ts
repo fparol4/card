@@ -8,6 +8,7 @@ import { APICrypt } from "./apis/crypt";
 
 import { APIPortador } from "./apis/portador";
 import { APITransaction } from "./apis/transactions";
+import { APICartao } from "./apis/cartao";
 
 export class SDKClient {
   public params: SDKParams;
@@ -15,6 +16,7 @@ export class SDKClient {
 
   public crypto: APICrypt;
   public portador: APIPortador;
+  public cartao: APICartao;
   public transactions: APITransaction;
 
   constructor(params: SDKParams) {
@@ -22,6 +24,7 @@ export class SDKClient {
     this.client = axios.create({ baseURL: params.baseURL });
     this.crypto = new APICrypt(this.client);
     this.portador = new APIPortador(this.client);
+    this.cartao = new APICartao(this.client, this.crypto);
     this.transactions = new APITransaction(this.client);
   }
 

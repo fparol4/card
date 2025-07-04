@@ -2,7 +2,6 @@ import { SDKClient } from "./greecale/client";
 import { logger } from "./greecale/utils";
 
 import keys from "./greecale/misc/keys.json";
-import { newPortadorDTO } from "./greecale/misc/portador";
 
 (async () => {
   const client = new SDKClient({
@@ -18,11 +17,11 @@ import { newPortadorDTO } from "./greecale/misc/portador";
   // const aesKey = await client.crypto.getAESKey(options);
   // logger({ aesKey });
 
-  // const toEncrupt = "5540542841359729";
-  // const encrypted = await client.crypto.encrypt(toEncrupt, options);
+  const toEncrupt = "2121";
+  const encrypted = await client.crypto.encrypt(toEncrupt, options);
   // logger({ encrypted });
-
-  // const encrypted = "5CD2F824502B11CEED5B235ADE2EB8FF";
+  //
+  // const encrypted = "3893B8CB6E567A5A23AE31D74322C4A9";
   // const decrypted = await client.crypto.decrypt(encrypted, options);
   // logger({ decrypted });
 
@@ -42,4 +41,11 @@ import { newPortadorDTO } from "./greecale/misc/portador";
   //     valorTransferencia: 200,
   //   },
   // });
+  //
+
+  const cartao = await client.cartao.getByProxy("1014500000245001", true, {
+    token,
+  });
+
+  logger({ cartao });
 })();

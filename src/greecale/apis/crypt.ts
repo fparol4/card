@@ -27,7 +27,7 @@ export class APICrypt {
     const { key, iv } = await this.getAESKey(options);
     const cipher = crypto.createCipheriv(CRIPT_ALGORITHM, key, iv);
     cipher.setAutoPadding(false);
-
+    content = content.padEnd(16, " "); // add padding
     const encrypted = Buffer.concat([cipher.update(content), cipher.final()])
       .toString("hex")
       .toUpperCase();
@@ -42,7 +42,9 @@ export class APICrypt {
     const decrypted = Buffer.concat([
       decipher.update(Buffer.from(content, "hex")),
       decipher.final(),
-    ]).toString("utf-8");
+    ])
+      .toString("utf-8")
+      .trim();
     return decrypted;
   }
 }
