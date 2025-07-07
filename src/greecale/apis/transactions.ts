@@ -3,6 +3,7 @@ import { requestOptions } from "../utils";
 import { SDKError } from "@src/shared/error";
 import { SDKRequestOptions } from "../types/common";
 
+import { SDKRequestOptions,} from "../types/common"
 import {
   ITransferByProxyDTO,
   ITransferByCardDTO,
@@ -252,9 +253,8 @@ export class APITransaction {
     }
   }
 
-  // --- CARGA / DESCARGA --- //
-
-  public async descargaPrePagoByProxy(
+   // Descarga pré-paga por proxy
+   public async unloadPrepaidByProxy(
     payload: IDescargaPrePagoProxyDTO,
     options?: SDKRequestOptions,
   ) {
@@ -270,7 +270,8 @@ export class APITransaction {
     }
   }
 
-  public async cargaByProxy(
+  // Carga por proxy
+  public async loadByProxy(
     payload: ICargaProxyDTO,
     options?: SDKRequestOptions,
   ) {
@@ -286,7 +287,8 @@ export class APITransaction {
     }
   }
 
-  public async cargaByCartao(
+  // Carga por cartão
+  public async loadByCard(
     payload: ICargaCartaoDTO,
     options?: SDKRequestOptions,
   ) {
@@ -304,7 +306,8 @@ export class APITransaction {
 
   // --- AUTORIZAÇÕES --- //
 
-  public async autorizacaoByProxy(
+  // Autorização por proxy
+  public async authorizeByProxy(
     payload: IAutorizacaoProxyDTO,
     options?: SDKRequestOptions,
   ) {
@@ -320,7 +323,8 @@ export class APITransaction {
     }
   }
 
-  public async autorizacaoParceladaByProxy(
+  // Autorização parcelada por proxy
+  public async authorizeInstallmentsByProxy(
     payload: IAutorizacaoParceladaProxyDTO,
     options?: SDKRequestOptions,
   ) {
@@ -336,7 +340,8 @@ export class APITransaction {
     }
   }
 
-  public async autorizacaoByCartao(
+  // Autorização por cartão
+  public async authorizeByCard(
     payload: IAutorizacaoCartaoDTO,
     options?: SDKRequestOptions,
   ) {
@@ -354,7 +359,8 @@ export class APITransaction {
 
   // --- CONSULTA DE TRANSAÇÕES --- //
 
-  public async getTransacoesPorProxy(
+  // Obter transações por proxy
+  public async getTransactionsByProxy(
     params: {
       proxy: string;
       dataInicio: string;
@@ -380,7 +386,8 @@ export class APITransaction {
     }
   }
 
-  public async getTransacoesMultiSaldoPorProxy(
+  // Obter transações multi-saldo por proxy
+  public async getMultiBalanceTransactionsByProxy(
     params: {
       proxy: string;
       dataInicio?: string;
@@ -406,7 +413,8 @@ export class APITransaction {
     }
   }
 
-  public async getTransacoesMultiSaldoPorCartao(
+  // Obter transações multi-saldo por cartão
+  public async getMultiBalanceTransactionsByCard(
     params: {
       numeroCartao: string;
       dataInicio?: string;
@@ -432,7 +440,8 @@ export class APITransaction {
     }
   }
 
-  public async getTransacoesPorCartao(
+  // Obter transações por cartão
+  public async getTransactionsByCard(
     params: {
       numeroCartao: string;
       dataInicio: string;
