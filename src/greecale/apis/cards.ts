@@ -9,7 +9,7 @@ import {
   GreecaleCardDTO,
 } from "../types/card.types";
 
-export class APICartao {
+export class CardApi {
   constructor(
     private client: AxiosInstance,
     private crypto: CryptApi,
