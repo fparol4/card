@@ -31,7 +31,7 @@ export type AESKey = {
 // -- PORTADOR (CARD-HOLDER) ---
 
 export interface INewPortadorDTO {
-  /* Person */
+  /* Pessoa */
   nome: string;
   nomeCompleto: string;
   sobreNome: string;
@@ -47,13 +47,13 @@ export interface INewPortadorDTO {
   telefoneComercial: string;
   celular: string;
 
-  /* Document */
+  /* Documento */
   cpf: string;
   rg: string;
   orgaoEmissorRG: string;
   estadoEmissorRG: string;
 
-  /* Address */
+  /* Endereço */
   logradouro: string;
   numero: string;
   complemento: string;
@@ -64,7 +64,7 @@ export interface INewPortadorDTO {
   estado: string;
   pais: string;
 
-  /* Employment */
+  /* Empregador */
   nomeEmpregador: string;
   codigoEmpregador: string;
   matricula: string;
@@ -72,7 +72,7 @@ export interface INewPortadorDTO {
   dataAdmissao: string;
   salario: string;
 
-  /* Product and Card Details */
+  /* Detalhes e Produto do Cartão */
   produto: string;
   tipoCartao: string;
   ga: string;
@@ -88,13 +88,13 @@ export interface INewPortadorDTO {
   proxy: string;
   RMC: string;
 
-  /* Bank Details */
+  /* Detalhes do Banco */
   codigoBanco: string;
   codigoAgencia: string;
   codigoContaCorrente: string;
   digitoContaCorrente: string;
 
-  /* Correspondant */
+  /* Correspondente */
   cnpjCorrespondente: string;
 }
 

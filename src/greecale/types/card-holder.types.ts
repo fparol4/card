@@ -1,14 +1,14 @@
-export interface IPortadorDTO {
-  /* Product & Delivery */
+export interface ICardHolderDTO {
+  /* Produto e Entregadora */
   produto: number;
   codigoEntregadora: number;
 
-  /* Card Details */
+  /* Detalhes Cartão */
   tipoCartao: number;
   codigoPlastico: number;
   tipoPlastico: number;
 
-  /* Employer & Contract */
+  /* Empregador e Contrato */
   codigoEmpregador: number;
   nomeEmpregador: string;
   matricula: string;
@@ -18,7 +18,7 @@ export interface IPortadorDTO {
   limiteCredito?: number;
   geraSenhaAtivacao: boolean;
 
-  /* Personal Information */
+  /* Informação Pessoal */
   nomeCompleto: string;
   nome: string;
   sobreNome: string;
@@ -35,7 +35,7 @@ export interface IPortadorDTO {
   nomeMae: string;
   ga?: string;
 
-  /* Address */
+  /* Endereço */
   logradouro?: string;
   numero: string;
   complemento?: string;
@@ -46,14 +46,14 @@ export interface IPortadorDTO {
   estado: string;
   pais: string;
 
-  /* Contact */
+  /* Contato */
   telefone: string;
   telefoneComercial?: string;
   celular?: string;
   email: string;
   proxy?: string;
 
-  /* Financial & Billing */
+  /* Financeiro e Contas */
   codigoBanco?: number;
   codigoAgencia?: number;
   codigoContaCorrente?: string;
@@ -62,16 +62,16 @@ export interface IPortadorDTO {
   tipoEnvioFatura: number;
   cnpjCorrespondente?: string;
 
-  /* Embossing & Association */
+  /* Embossadora e Associacao */
   geraEmbossing: boolean;
   embossadora: string;
   permiteAssociacaoMultipla?: boolean;
   RMC?: string;
 }
 
-export type IAddPortadorDTO = IPortadorDTO;
+export type IAddCardHolderDTO = ICardHolderDTO;
 
-export type IAddPortadorResDTO = {
+export type IAddCardHolderResponse = {
   cartao: string;
   proxy: string;
   dataVencimento: string;
@@ -79,20 +79,20 @@ export type IAddPortadorResDTO = {
   conta: string;
 };
 
-export interface IUpdatePortadorDTO {
-  /* Identification */
+export interface IUpdateCardHolderDTO {
+  /* Identificação */
   nomeCompleto: string;
   nome: string;
   sobrenome: string;
   nomeEmbossing: string;
 
-  /* Personal Information */
+  /* Informação Pessoal */
   dataNascimento: string;
   sexo: "M" | "F" | "S";
   estadoCivil: string;
   nacionalidade: string;
 
-  /* Documents */
+  /* Documentos */
   documento: string;
   rg: string;
   orgaoEmissorRG: string;
@@ -102,7 +102,7 @@ export interface IUpdatePortadorDTO {
   nomeMae: string;
   nomePai: string;
 
-  /* Address */
+  /* Endereço */
   logradouro: string;
   numero: string;
   complemento: string;
@@ -113,9 +113,73 @@ export interface IUpdatePortadorDTO {
   pais: string;
   cep: number;
 
-  /* Contact */
+  /* Contato */
   telefone: string;
   telefoneComercial: string;
   celular: string;
   email: string;
+}
+
+// --- CRIAR PORTADOR --- //
+export interface ICreateCardHolderParams {
+  nome: string;
+  nomeCompleto: string;
+  sobreNome: string;
+  dataNascimento: string;
+  email: string;
+  estadoCivil: string;
+  nacionalidade: string;
+  nomeMae: string;
+  nomePai: string;
+  nomeSocial: string;
+  sexo: string;
+  telefone: string;
+  telefoneComercial: string;
+  celular: string;
+  cpf: string;
+  rg: string;
+  orgaoEmissorRG: string;
+  estadoEmissorRG: string;
+  logradouro: string;
+  numero: string;
+  complemento: string;
+  referencia: string;
+  bairro: string;
+  cidade: string;
+  cep: string;
+  estado: string;
+  pais: string;
+  nomeEmpregador: string;
+  codigoEmpregador: string;
+  matricula: string;
+  cargo: string;
+  dataAdmissao: string;
+  salario: string;
+  produto: string;
+  tipoCartao: string;
+  ga: string;
+  limiteCredito: string;
+  embossadora: string;
+  geraSenhaAtivacao: string;
+  codigoEntregadora: string;
+  codigoPlastico: string;
+  codigoVencimentoFatura: string;
+  geraEmbossing: string;
+  tipoEnvioFatura: string;
+  tipoPlastico: string;
+  proxy: string;
+  RMC: string;
+  codigoBanco: string;
+  codigoAgencia: string;
+  codigoContaCorrente: string;
+  digitoContaCorrente: string;
+  cnpjCorrespondente: string;
+}
+
+export interface ICreateCardHolderResponse {
+  cartao: string;
+  proxy: string;
+  dataVencimento: string;
+  nomeEmbossing: string;
+  conta: string;
 }

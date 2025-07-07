@@ -3,24 +3,24 @@ import { requestOptions } from "../utils";
 import { SDKError } from "@src/shared/error";
 import { SDKRequestOptions } from "../types/common";
 import {
-  IObterLimitePorProxyParams,
-  IObterLimitePorProxyResDTO,
-  IAtualizarLimitePorProxyParams,
-  IAtualizarLimitePorProxyBody,
-  IAtualizarLimitePorProxyResDTO
-} from "../types/limites.types";
+  IGetLimitByProxyParams,
+  IGetLimitByProxyResponse,
+  IUpdateLimitByProxyParams,
+  IUpdateLimitByProxyBody,
+  IUpdateLimitByProxyResponse
+} from "../types/limit.types";
 
-export class APILimites {
+export class LimitsApi {
   constructor(public client: AxiosInstance) {}
 
   // Obter limite por proxy
   public async getLimitByProxy(
-    params: IObterLimitePorProxyParams,
+    params: IGetLimitByProxyParams,
     options?: SDKRequestOptions,
-  ): Promise<IObterLimitePorProxyResDTO> {
+  ): Promise<IGetLimitByProxyResponse> {
     try {
-      const { data } = await this.client.get<IObterLimitePorProxyResDTO>(
-        `/proxy/${params.proxy}`,
+      const { data } = await this.client.get<IGetLimitByProxyResponse>(
+        `/limite/proxy/${params.proxy}`,
         requestOptions(options),
       );
       return data;
@@ -31,13 +31,13 @@ export class APILimites {
 
   // Atualizar limite por proxy
   public async updateLimitByProxy(
-    params: IAtualizarLimitePorProxyParams,
-    body: IAtualizarLimitePorProxyBody,
+    params: IUpdateLimitByProxyParams,
+    body: IUpdateLimitByProxyBody,
     options?: SDKRequestOptions,
-  ): Promise<IAtualizarLimitePorProxyResDTO> {
+  ): Promise<IUpdateLimitByProxyResponse> {
     try {
-      const { data } = await this.client.put<IAtualizarLimitePorProxyResDTO>(
-        `/proxy/${params.proxy}`,
+      const { data } = await this.client.put<IUpdateLimitByProxyResponse>(
+        `/limite/proxy/${params.proxy}`,
         body,
         requestOptions(options),
       );

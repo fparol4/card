@@ -3,35 +3,35 @@ import { requestOptions } from "../utils";
 import { SDKError } from "@src/shared/error";
 import { SDKRequestOptions } from "../types/common";
 import {
-  IExtratoPorProxyParams,
-  IExtratoPorProxyResDTO,
-  IFaturasAbertasPorProxyParams,
-  IFaturasAbertasPorProxyResDTO,
-  IFaturasFechadasPorProxyParams,
-  IFaturasFechadasPorProxyResDTO,
-  IDetalheFaturaPorProxyParams,
-  IDetalheFaturaPorProxyResDTO,
-  IAtualizarVencimentoPorProxyParams,
-  IAtualizarVencimentoPorProxyBody,
-  IAtualizarVencimentoPorProxyResDTO
-} from "../types/faturas.types";
+  IGetStatementByProxyParams,
+  IGetStatementByProxyResponse,
+  IGetOpenInvoicesByProxyParams,
+  IGetOpenInvoicesByProxyResponse,
+  IGetClosedInvoicesByProxyParams,
+  IGetClosedInvoicesByProxyResponse,
+  IGetInvoiceDetailByProxyParams,
+  IGetInvoiceDetailByProxyResponse,
+  IUpdateDueDateByProxyParams,
+  IUpdateDueDateByProxyBody,
+  IUpdateDueDateByProxyResponse
+} from "../types/invoice.types";
 
-export class APIFaturas {
+export class InvoicesApi {
   constructor(public client: AxiosInstance) {}
 
   // Extrato por proxy
   public async getStatementByProxy(
-    params: IExtratoPorProxyParams,
+    params: IGetStatementByProxyParams,
     options?: SDKRequestOptions,
-  ): Promise<IExtratoPorProxyResDTO[]> {
+  ): Promise<IGetStatementByProxyResponse[]> {
     try {
       const query = new URLSearchParams({
         dataInicio: params.dataInicio,
         dataFim: params.dataFim,
         ...(params.pagina ? { pagina: params.pagina } : {}),
       }).toString();
-      const { data } = await this.client.get<IExtratoPorProxyResDTO[]>(
-        `/extrato/proxy/${params.proxy}?${query}`,
+      const { data } = await this.client.get<IGetStatementByProxyResponse[]>(
+        `/faturas/extrato/proxy/${params.proxy}?${query}`,
         requestOptions(options),
       );
       return data;
@@ -42,12 +42,12 @@ export class APIFaturas {
 
   // Faturas abertas por proxy
   public async getOpenInvoicesByProxy(
-    params: IFaturasAbertasPorProxyParams,
+    params: IGetOpenInvoicesByProxyParams,
     options?: SDKRequestOptions,
-  ): Promise<IFaturasAbertasPorProxyResDTO> {
+  ): Promise<IGetOpenInvoicesByProxyResponse> {
     try {
-      const { data } = await this.client.get<IFaturasAbertasPorProxyResDTO>(
-        `/abertas/proxy/${params.proxy}`,
+      const { data } = await this.client.get<IGetOpenInvoicesByProxyResponse>(
+        `/faturas/abertas/proxy/${params.proxy}`,
         requestOptions(options),
       );
       return data;
@@ -58,12 +58,12 @@ export class APIFaturas {
 
   // Faturas fechadas por proxy
   public async getClosedInvoicesByProxy(
-    params: IFaturasFechadasPorProxyParams,
+    params: IGetClosedInvoicesByProxyParams,
     options?: SDKRequestOptions,
-  ): Promise<IFaturasFechadasPorProxyResDTO> {
+  ): Promise<IGetClosedInvoicesByProxyResponse> {
     try {
-      const { data } = await this.client.get<IFaturasFechadasPorProxyResDTO>(
-        `/fechadas/proxy/${params.proxy}`,
+      const { data } = await this.client.get<IGetClosedInvoicesByProxyResponse>(
+        `/faturas/fechadas/proxy/${params.proxy}`,
         requestOptions(options),
       );
       return data;
@@ -74,16 +74,16 @@ export class APIFaturas {
 
   // Detalhe da fatura por proxy
   public async getInvoiceDetailsByProxy(
-    params: IDetalheFaturaPorProxyParams,
+    params: IGetInvoiceDetailByProxyParams,
     options?: SDKRequestOptions,
-  ): Promise<IDetalheFaturaPorProxyResDTO[]> {
+  ): Promise<IGetInvoiceDetailByProxyResponse[]> {
     try {
       const query = new URLSearchParams({
         periodo: params.periodo.toString(),
         ...(params.pagina ? { pagina: params.pagina } : {}),
       }).toString();
-      const { data } = await this.client.get<IDetalheFaturaPorProxyResDTO[]>(
-        `/detalhe/proxy/${params.proxy}?${query}`,
+      const { data } = await this.client.get<IGetInvoiceDetailByProxyResponse[]>(
+        `/faturas/detalhe/proxy/${params.proxy}?${query}`,
         requestOptions(options),
       );
       return data;
@@ -94,13 +94,13 @@ export class APIFaturas {
 
   // Atualizar vencimento por proxy
   public async updateDueDateByProxy(
-    params: IAtualizarVencimentoPorProxyParams,
-    body: IAtualizarVencimentoPorProxyBody,
+    params: IUpdateDueDateByProxyParams,
+    body: IUpdateDueDateByProxyBody,
     options?: SDKRequestOptions,
-  ): Promise<IAtualizarVencimentoPorProxyResDTO> {
+  ): Promise<IUpdateDueDateByProxyResponse> {
     try {
-      const { data } = await this.client.put<IAtualizarVencimentoPorProxyResDTO>(
-        `/vencimento/proxy/${params.proxy}`,
+      const { data } = await this.client.put<IUpdateDueDateByProxyResponse>(
+        `/faturas/vencimento/proxy/${params.proxy}`,
         body,
         requestOptions(options),
       );

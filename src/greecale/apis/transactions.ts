@@ -3,36 +3,37 @@ import { requestOptions } from "../utils";
 import { SDKError } from "@src/shared/error";
 import { SDKRequestOptions } from "../types/common";
 
-import { SDKRequestOptions,} from "../types/common"
 import {
   ITransferByProxyDTO,
   ITransferByCardDTO,
-  ITransferResDTO,
-  IEstornoDTO,
-  IEstornoResDTO,
-  IEstornoCartaoDTO,
-  IDescargaPrePagoProxyDTO,
-  IDescargaPrePagoProxyResDTO,
-  ICargaProxyDTO,
-  ICargaProxyResDTO,
-  ICargaCartaoDTO,
-  ICargaCartaoResDTO,
-  IAutorizacaoProxyDTO,
-  IAutorizacaoProxyResDTO,
-  IAutorizacaoParceladaProxyDTO,
-  IAutorizacaoParceladaProxyResDTO,
-  IAutorizacaoCartaoDTO,
-  IAutorizacaoCartaoResDTO,
-  ITransacaoPorProxyResDTO,
-  ITransacaoMultiSaldoPorProxyResDTO,
-  ITransacaoMultiSaldoPorCartaoResDTO,
-  ITransacaoPorCartaoResDTO,
+  ITransferByProxyResponse,
+  ITransferByCardResponse,
+  IRefundDTO,
+  IRefundResponse,
+  IRefundByCardDTO,
+  IRefundByCardResponse,
+  IUnloadPrepaidByProxyDTO,
+  IUnloadPrepaidByProxyResponse,
+  IUnloadPrepaidByCardDTO,
+  IUnloadPrepaidByCardResponse,
+  ILoadByProxyDTO,
+  ILoadByProxyResponse,
+  ILoadByCardDTO,
+  ILoadByCardResponse,
+  IAuthorizationByProxyDTO,
+  IAuthorizationByProxyResponse,
+  IInstallmentAuthorizationByProxyDTO,
+  IInstallmentAuthorizationByProxyResponse,
+  IAuthorizationByCardDTO,
+  IAuthorizationByCardResponse,
+  ITransactionByProxyResponse,
+  IMultiBalanceTransactionByProxyResponse,
+  IMultiBalanceTransactionByCardResponse,
+  ITransactionByCardResponse
 } from "../types/transaction.types";
 
-export class APITransaction {
+export class TransactionsApi {
   constructor(public client: AxiosInstance) {}
-
-  // --- TRANSFERÊNCIAS --- //
 
   // --- TRANSFERÊNCIAS --- //
 
@@ -41,7 +42,7 @@ export class APITransaction {
     options?: SDKRequestOptions,
   ) {
     try {
-      const { data } = await this.client.post<any>(
+      const { data } = await this.client.post<ITransferByProxyResponse>(
         `/transacoes/transfere/${payload.proxy}`,
         payload.body,
         requestOptions(options),
@@ -57,7 +58,7 @@ export class APITransaction {
     options?: SDKRequestOptions,
   ) {
     try {
-      const { data } = await this.client.post<ITransferResDTO>(
+      const { data } = await this.client.post<ITransferByCardResponse>(
         `/transacoes/transfere/cartao/${payload.numeroCartao}`,
         payload.body,
         requestOptions(options),
@@ -71,11 +72,11 @@ export class APITransaction {
   // --- ESTORNOS --- //
 
   public async refundMultiBalance(
-    payload: IEstornoDTO,
+    payload: IRefundDTO,
     options?: SDKRequestOptions,
   ) {
     try {
-      const { data } = await this.client.post<IEstornoResDTO>(
+      const { data } = await this.client.post<IRefundResponse>(
         `/transacoes/multisaldo/estorno/${payload.proxy}`,
         payload.body,
         requestOptions(options),
@@ -87,11 +88,11 @@ export class APITransaction {
   }
 
   public async refundMultiBalanceByCard(
-    payload: IEstornoCartaoDTO,
+    payload: IRefundByCardDTO,
     options?: SDKRequestOptions,
   ) {
     try {
-      const { data } = await this.client.post<IEstornoResDTO>(
+      const { data } = await this.client.post<IRefundResponse>(
         `/transacoes/multisaldo/estorno/cartao/${payload.numeroCartao}`,
         payload.body,
         requestOptions(options),
@@ -104,12 +105,12 @@ export class APITransaction {
 
   // --- CARGA / DESCARGA --- //
 
-  public async descargaPrePagoByProxy(
-    payload: IDescargaPrePagoProxyDTO,
+  public async unloadPrepaidByProxy(
+    payload: IUnloadPrepaidByProxyDTO,
     options?: SDKRequestOptions,
   ) {
     try {
-      const { data } = await this.client.post<IDescargaPrePagoProxyResDTO>(
+      const { data } = await this.client.post<IUnloadPrepaidByProxyResponse>(
         `/transacoes/descarga/pre-pago/proxy/${payload.proxy}`,
         payload.body,
         requestOptions(options),
@@ -121,12 +122,12 @@ export class APITransaction {
   }
 
   public async cargaByProxy(
-    payload: ICargaProxyDTO,
+    payload: ILoadByProxyDTO,
     options?: SDKRequestOptions,
   ) {
     try {
-      const { data } = await this.client.post<ICargaProxyResDTO>(
-        `/transacoes/carga/proxy/${payload.proxy}`,
+      const { data } = await this.client.post<IUnloadPrepaidByCardResponse>(
+        `/transacoes/descarga/pre-pago/cartao/${payload.proxy}`,
         payload.body,
         requestOptions(options),
       );
@@ -136,147 +137,12 @@ export class APITransaction {
     }
   }
 
-  public async cargaByCartao(
-    payload: ICargaCartaoDTO,
-    options?: SDKRequestOptions,
-  ) {
-    try {
-      const { data } = await this.client.post<ICargaCartaoResDTO>(
-        `/transacoes/carga/cartao/${payload.numeroCartao}`,
-        payload.body,
-        requestOptions(options),
-      );
-      return data;
-    } catch (error) {
-      throw new SDKError("Unauthorized", error);
-    }
-  }
-
-  // --- AUTORIZAÇÕES --- //
-
-  public async autorizacaoByProxy(
-    payload: IAutorizacaoProxyDTO,
-    options?: SDKRequestOptions,
-  ) {
-    try {
-      const { data } = await this.client.post<IAutorizacaoProxyResDTO>(
-        `/transacoes/autorizacao/proxy/${payload.proxy}`,
-        payload.body,
-        requestOptions(options),
-      );
-      return data;
-    } catch (error) {
-      throw new SDKError("Unauthorized", error);
-    }
-  }
-
-  public async autorizacaoParceladaByProxy(
-    payload: IAutorizacaoParceladaProxyDTO,
-    options?: SDKRequestOptions,
-  ) {
-    try {
-      const { data } = await this.client.post<IAutorizacaoParceladaProxyResDTO>(
-        `/transacoes/autorizacao/parcelada/proxy/${payload.proxy}`,
-        payload.body,
-        requestOptions(options),
-      );
-      return data;
-    } catch (error) {
-      throw new SDKError("Unauthorized", error);
-    }
-  }
-
-  public async autorizacaoByCartao(
-    payload: IAutorizacaoCartaoDTO,
-    options?: SDKRequestOptions,
-  ) {
-    try {
-      const { data } = await this.client.post<IAutorizacaoCartaoResDTO>(
-        `/transacoes/autorizacao/cartao/${payload.numeroCartao}`,
-        `/transacoes/transfere/${payload.proxy}`,
-        payload.body,
-        requestOptions(options),
-      );
-      return data;
-    } catch (error) {
-      throw new SDKError("Unauthorized", error);
-    }
-  }
-
-  public async transferByCard(
-    payload: ITransferByCardDTO,
-    options?: SDKRequestOptions,
-  ) {
-    try {
-      const { data } = await this.client.post<ITransferResDTO>(
-        `/transacoes/transfere/cartao/${payload.numeroCartao}`,
-        payload.body,
-        requestOptions(options),
-      );
-      return data;
-    } catch (error) {
-      throw new SDKError("Unauthorized", error);
-    }
-  }
-
-  // --- ESTORNOS --- //
-
-  public async refundMultiBalance(
-    payload: IEstornoDTO,
-    options?: SDKRequestOptions,
-  ) {
-    try {
-      const { data } = await this.client.post<IEstornoResDTO>(
-        `/transacoes/multisaldo/estorno/${payload.proxy}`,
-        payload.body,
-        requestOptions(options),
-      );
-      return data;
-    } catch (error) {
-      throw new SDKError("Unauthorized", error);
-    }
-  }
-
-  public async refundMultiBalanceByCard(
-    payload: IEstornoCartaoDTO,
-    options?: SDKRequestOptions,
-  ) {
-    try {
-      const { data } = await this.client.post<IEstornoResDTO>(
-        `/transacoes/multisaldo/estorno/cartao/${payload.numeroCartao}`,
-        payload.body,
-        requestOptions(options),
-      );
-      return data;
-    } catch (error) {
-      throw new SDKError("Unauthorized", error);
-    }
-  }
-
-   // Descarga pré-paga por proxy
-   public async unloadPrepaidByProxy(
-    payload: IDescargaPrePagoProxyDTO,
-    options?: SDKRequestOptions,
-  ) {
-    try {
-      const { data } = await this.client.post<IDescargaPrePagoProxyResDTO>(
-        `/transacoes/descarga/pre-pago/proxy/${payload.proxy}`,
-        payload.body,
-        requestOptions(options),
-      );
-      return data;
-    } catch (error) {
-      throw new SDKError("Unauthorized", error);
-    }
-  }
-
-  // Carga por proxy
   public async loadByProxy(
-    payload: ICargaProxyDTO,
+    payload: ILoadByProxyDTO,
     options?: SDKRequestOptions,
   ) {
     try {
-      const { data } = await this.client.post<ICargaProxyResDTO>(
+      const { data } = await this.client.post<ILoadByProxyResponse>(
         `/transacoes/carga/proxy/${payload.proxy}`,
         payload.body,
         requestOptions(options),
@@ -287,13 +153,12 @@ export class APITransaction {
     }
   }
 
-  // Carga por cartão
   public async loadByCard(
-    payload: ICargaCartaoDTO,
+    payload: ILoadByCardDTO,
     options?: SDKRequestOptions,
   ) {
     try {
-      const { data } = await this.client.post<ICargaCartaoResDTO>(
+      const { data } = await this.client.post<ILoadByCardResponse>(
         `/transacoes/carga/cartao/${payload.numeroCartao}`,
         payload.body,
         requestOptions(options),
@@ -308,11 +173,11 @@ export class APITransaction {
 
   // Autorização por proxy
   public async authorizeByProxy(
-    payload: IAutorizacaoProxyDTO,
+    payload: IAuthorizationByProxyDTO,
     options?: SDKRequestOptions,
   ) {
     try {
-      const { data } = await this.client.post<IAutorizacaoProxyResDTO>(
+      const { data } = await this.client.post<IAuthorizationByProxyResponse>(
         `/transacoes/autorizacao/proxy/${payload.proxy}`,
         payload.body,
         requestOptions(options),
@@ -325,11 +190,11 @@ export class APITransaction {
 
   // Autorização parcelada por proxy
   public async authorizeInstallmentsByProxy(
-    payload: IAutorizacaoParceladaProxyDTO,
+    payload: IInstallmentAuthorizationByProxyDTO,
     options?: SDKRequestOptions,
   ) {
     try {
-      const { data } = await this.client.post<IAutorizacaoParceladaProxyResDTO>(
+      const { data } = await this.client.post<IInstallmentAuthorizationByProxyResponse>(
         `/transacoes/autorizacao/parcelada/proxy/${payload.proxy}`,
         payload.body,
         requestOptions(options),
@@ -342,11 +207,11 @@ export class APITransaction {
 
   // Autorização por cartão
   public async authorizeByCard(
-    payload: IAutorizacaoCartaoDTO,
+    payload: IAuthorizationByCardDTO,
     options?: SDKRequestOptions,
   ) {
     try {
-      const { data } = await this.client.post<IAutorizacaoCartaoResDTO>(
+      const { data } = await this.client.post<IAuthorizationByCardResponse>(
         `/transacoes/autorizacao/cartao/${payload.numeroCartao}`,
         payload.body,
         requestOptions(options),
@@ -376,7 +241,7 @@ export class APITransaction {
         ...(params.pagina ? { pagina: params.pagina } : {}),
       }).toString();
 
-      const { data } = await this.client.get<ITransacaoPorProxyResDTO[]>(
+      const { data } = await this.client.get<ITransactionByProxyResponse[]>(
         `/transacoes/proxy/${params.proxy}?${query}`,
         requestOptions(options),
       );
@@ -402,7 +267,7 @@ export class APITransaction {
       }).toString();
 
       const { data } = await this.client.get<
-        ITransacaoMultiSaldoPorProxyResDTO[]
+        IMultiBalanceTransactionByProxyResponse[]
       >(
         `/transacoes/multi-saldo/proxy/${params.proxy}${query ? `?${query}` : ""}`,
         requestOptions(options),
@@ -429,7 +294,7 @@ export class APITransaction {
       }).toString();
 
       const { data } = await this.client.get<
-        ITransacaoMultiSaldoPorCartaoResDTO[]
+        IMultiBalanceTransactionByCardResponse[]
       >(
         `/transacoes/multi-saldo/cartao/${params.numeroCartao}${query ? `?${query}` : ""}`,
         requestOptions(options),
@@ -457,7 +322,7 @@ export class APITransaction {
         ...(params.pagina ? { pagina: params.pagina } : {}),
       }).toString();
 
-      const { data } = await this.client.get<ITransacaoPorCartaoResDTO[]>(
+      const { data } = await this.client.get<ITransactionByCardResponse[]>(
         `/transacoes/cartao/${params.numeroCartao}?${query}`,
         requestOptions(options),
       );

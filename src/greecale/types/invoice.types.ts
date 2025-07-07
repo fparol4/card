@@ -1,11 +1,11 @@
 // --- EXTRATO POR PROXY --- //
-export type IExtratoPorProxyParams = {
+export type IGetStatementByProxyParams = {
   proxy: string;
   dataInicio: string;
   dataFim: string;
   pagina?: string;
 };
-export type IExtratoPorProxyResDTO = {
+export type IGetStatementByProxyResponse = {
   tipo: string;
   idTransacao: number;
   idMovimento: number;
@@ -22,10 +22,10 @@ export type IExtratoPorProxyResDTO = {
 };
 
 // --- FATURAS ABERTAS POR PROXY --- //
-export type IFaturasAbertasPorProxyParams = {
+export type IGetOpenInvoicesByProxyParams = {
   proxy: string;
 };
-export type IFaturasAbertasPorProxyResDTO = {
+export type IGetOpenInvoicesByProxyResponse = {
   periodo: string;
   dataCorte: string;
   dataVencimento: string;
@@ -48,10 +48,10 @@ export type IFaturasAbertasPorProxyResDTO = {
 };
 
 // --- FATURAS FECHADAS POR PROXY --- //
-export type IFaturasFechadasPorProxyParams = {
+export type IGetClosedInvoicesByProxyParams = {
   proxy: string;
 };
-export type IFaturasFechadasPorProxyResDTO = {
+export type IGetClosedInvoicesByProxyResponse = {
   periodo: string;
   dataCorte: string;
   dataVencimento: string;
@@ -72,12 +72,12 @@ export type IFaturasFechadasPorProxyResDTO = {
 }[];
 
 // --- DETALHE DA FATURA POR PROXY --- //
-export type IDetalheFaturaPorProxyParams = {
+export type IGetInvoiceDetailByProxyParams = {
   proxy: string;
   periodo: number;
   pagina?: string;
 };
-export type IDetalheFaturaPorProxyResDTO = {
+export type IGetInvoiceDetailByProxyResponse = {
   nome: string;
   dataMovimento: string;
   dataPostagem: string;
@@ -95,10 +95,10 @@ export type IDetalheFaturaPorProxyResDTO = {
 };
 
 // --- ATUALIZAR VENCIMENTO POR PROXY --- //
-export type IAtualizarVencimentoPorProxyParams = {
+export type IUpdateDueDateByProxyParams = {
   proxy: string;
 };
-export type IAtualizarVencimentoPorProxyBody = {
+export type IUpdateDueDateByProxyBody = {
   codigoVencimento: number;
 };
-export type IAtualizarVencimentoPorProxyResDTO = Record<string, never>; // resposta vazia
+export type IUpdateDueDateByProxyResponse = Record<string, never>; // resposta vazia

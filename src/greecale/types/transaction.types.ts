@@ -1,38 +1,32 @@
-// --- TRANSFERENCIAS --- //
-
+// --- TRANSFERÊNCIAS --- //
 export type ITransferDTO = {
   body: {
     linhaOrigem: number;
     linhaDestino: number;
     valorTransferencia: number;
   };
-}
+};
 
-export type ITransferResDTO = {
+export type ITransferResponse = {
   dataHora: string;
   trace: number;
   valorTransferido: number;
 };
 
-// --- TRANSFERENCIAS POR PROXY --- //
-
+// --- TRANSFERÊNCIAS POR PROXY --- //
 export type ITransferByProxyDTO = ITransferDTO & {
   proxy: string;
 };
+export type ITransferByProxyResponse = ITransferResponse;
 
-export type ITransferByProxyResDTO = ITransferResDTO;
-
-// --- TRANSFERENCIAS POR CARTÃO --- //
-
+// --- TRANSFERÊNCIAS POR CARTÃO --- //
 export type ITransferByCardDTO = ITransferDTO & {
   numeroCartao: string;
 };
-
-export type ITransferByCardResDTO = ITransferResDTO;
+export type ITransferByCardResponse = ITransferResponse;
 
 // --- ESTORNO MULTISALDO --- //
-
-export type IEstornoDTO = {
+export type IRefundDTO = {
   proxy: string;
   body: {
     rubrica: number;
@@ -40,15 +34,15 @@ export type IEstornoDTO = {
     valor: number;
     linha: number;
   };
-}
+};
 
-export type IEstornoResDTO = {
+export type IRefundResponse = {
   trace: number;
   dataHora: string;
-}
-// --- ESTORNO MULTISALDO POR CARTÃO --- //
+};
 
-export type IEstornoCartaoDTO = {
+// --- ESTORNO MULTISALDO POR CARTÃO --- //
+export type IRefundByCardDTO = {
   numeroCartao: string;
   body: {
     rubrica: number;
@@ -56,35 +50,31 @@ export type IEstornoCartaoDTO = {
     valor: number;
     linha: number;
   };
-}
-
-export type IEstornoCartaoResDTO = IEstornoResDTO;
+};
+export type IRefundByCardResponse = IRefundResponse;
 
 // --- DESCARGA PRÉ-PAGO POR PROXY --- //
-
-export type IDescargaPrePagoProxyDTO = {
+export type IUnloadPrepaidByProxyDTO = {
   proxy: string;
   body: {
     moeda: number;
     valor: number;
   };
 };
+export type IUnloadPrepaidByProxyResponse = IRefundResponse;
 
-export type IDescargaPrePagoProxyResDTO = IEstornoResDTO;
-
-//--- DESCARGA PRÉ-PAGO POR CARTÃO --- //
-export type IDescargaPrePagoCartaoDTO = {
+// --- DESCARGA PRÉ-PAGO POR CARTÃO --- //
+export type IUnloadPrepaidByCardDTO = {
   numeroCartao: string;
   body: {
     moeda: number;
     valor: number;
   };
 };
-
-export type IDescargaPrePagoCartaoResDTO = IEstornoResDTO;
+export type IUnloadPrepaidByCardResponse = IRefundResponse;
 
 // --- CARGA MULTISALDO POR PROXY --- //
-export type ICargaProxyDTO = {
+export type ILoadByProxyDTO = {
   proxy: string;
   body: {
     moeda: number;
@@ -92,11 +82,10 @@ export type ICargaProxyDTO = {
     linha: number;
   };
 };
-
-export type ICargaProxyResDTO = IEstornoResDTO;
+export type ILoadByProxyResponse = IRefundResponse;
 
 // --- CARGA MULTISALDO POR CARTÃO --- //
-export type ICargaCartaoDTO = {
+export type ILoadByCardDTO = {
   numeroCartao: string;
   body: {
     moeda: number;
@@ -104,11 +93,10 @@ export type ICargaCartaoDTO = {
     linha: number;
   };
 };
-
-export type ICargaCartaoResDTO = IEstornoResDTO;
+export type ILoadByCardResponse = IRefundResponse;
 
 // --- AUTORIZAÇÃO POR PROXY --- //
-export type IAutorizacaoProxyDTO = {
+export type IAuthorizationByProxyDTO = {
   proxy: string;
   body: {
     rubrica: number;
@@ -116,11 +104,10 @@ export type IAutorizacaoProxyDTO = {
     valor: number;
   };
 };
-
-export type IAutorizacaoProxyResDTO = IEstornoResDTO;
+export type IAuthorizationByProxyResponse = IRefundResponse;
 
 // --- AUTORIZAÇÃO PARCELADA POR PROXY --- //
-export type IAutorizacaoParceladaProxyDTO = {
+export type IInstallmentAuthorizationByProxyDTO = {
   proxy: string;
   body: {
     rubrica: number;
@@ -129,11 +116,10 @@ export type IAutorizacaoParceladaProxyDTO = {
     planoVenda: number;
   };
 };
-
-export type IAutorizacaoParceladaProxyResDTO = IEstornoResDTO;
+export type IInstallmentAuthorizationByProxyResponse = IRefundResponse;
 
 // --- AUTORIZAÇÃO POR CARTÃO --- //
-export type IAutorizacaoCartaoDTO = {
+export type IAuthorizationByCardDTO = {
   numeroCartao: string;
   body: {
     rubrica: number;
@@ -141,12 +127,10 @@ export type IAutorizacaoCartaoDTO = {
     valor: number;
   };
 };
-
-export type IAutorizacaoCartaoResDTO = IEstornoCartaoDTO;
+export type IAuthorizationByCardResponse = IAuthorizationByCardDTO;
 
 // --- TRANSAÇÕES POR PROXY --- //
-
-export type ITransacaoPorProxyResDTO = {
+export type ITransactionByProxyResponse = {
   id: number;
   cartao: {
     numero: string;
@@ -195,7 +179,7 @@ export type ITransacaoPorProxyResDTO = {
 };
 
 // --- TRANSAÇÕES MULTISALDO POR PROXY --- //
-export type ITransacaoMultiSaldoPorProxyResDTO = {
+export type IMultiBalanceTransactionByProxyResponse = {
   tipo: string;
   cartao: string;
   idAutorizacao: number;
@@ -211,7 +195,5 @@ export type ITransacaoMultiSaldoPorProxyResDTO = {
   valorOrigem: number;
   valorML: number;
 };
-
-export type ITransacaoMultiSaldoPorCartaoResDTO = ITransacaoMultiSaldoPorProxyResDTO;
-
-export type ITransacaoPorCartaoResDTO = ITransacaoPorProxyResDTO;
+export type IMultiBalanceTransactionByCardResponse = IMultiBalanceTransactionByProxyResponse;
+export type ITransactionByCardResponse = ITransactionByProxyResponse;
