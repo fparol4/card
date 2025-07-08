@@ -4,33 +4,34 @@ import { requestOptions } from "../utils";
 import { SDKError } from "@src/shared/error";
 
 import {
-  IAddPortadorDTO,
-  IPortadorDTO,
-  IUpdatePortadorDTO,
-} from "../types/portador.types";
+  ICardHolderDTO,
+  IAddCardHolderDTO,
+  IAddCardHolderResponse,
+  IUpdateCardHolderDTO
+} from "../types/card-holder.types";
 
-export class APIPortador {
-  constructor(private client: AxiosInstance) {}
+export class CardHoldersApi {
+  constructor(public client: AxiosInstance) {}
 
   public async getByProxy(proxy: string, options?: SDKRequestOptions) {
     try {
-      const { data } = await this.client.get<IPortadorDTO>(
+      const { data } = await this.client.get<ICardHolderDTO>(
         `/portador/proxy/${proxy}`,
         requestOptions(options),
       );
 
       return data;
     } catch (error) {
-      throw new SDKError("Portador > getById", error);
+      throw new SDKError("Unauthorized", error);
     }
   }
 
-  public async addPortador(
-    payload: IAddPortadorDTO,
+  public async addCardHolder(
+    payload: IAddCardHolderDTO,
     options?: SDKRequestOptions,
   ) {
     try {
-      const { data } = await this.client.post<IAddPortadorDTO>(
+      const { data } = await this.client.post<IAddCardHolderDTO>(
         `/portador`,
         payload,
         requestOptions(options),
@@ -38,17 +39,17 @@ export class APIPortador {
 
       return data;
     } catch (error) {
-      throw new SDKError("Portador > getById", error);
+      throw new SDKError("Unauthorized", error);
     }
   }
 
   public async updateByProxy(
     proxy: string,
-    payload: IUpdatePortadorDTO,
+    payload: IUpdateCardHolderDTO,
     options?: SDKRequestOptions,
   ) {
     try {
-      const { data } = await this.client.post<void>(
+      const { data } = await this.client.put<IUpdateCardHolderDTO>(
         `/portador/proxy/${proxy}`,
         payload,
         requestOptions(options),
@@ -56,7 +57,7 @@ export class APIPortador {
 
       return data;
     } catch (error) {
-      throw new SDKError("Portador > getById", error);
+      throw new SDKError("Unauthorized", error);
     }
   }
 }

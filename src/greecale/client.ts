@@ -6,9 +6,9 @@ import { SDKAuthResDTO, SDKParams } from "./types/common";
 import { logger, requestOptions } from "./utils";
 import { APICrypt } from "./apis/crypt";
 
-import { APIPortador } from "./apis/portador";
+import { APIPortador } from "./apis/card-holders";
 import { APITransaction } from "./apis/transactions";
-import { APICartao } from "./apis/cartao";
+import { APICartao } from "./apis/cards";
 
 export class SDKClient {
   private params: SDKParams;

@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { APICrypt } from "./crypt";
+import { CryptApi } from "./crypt";
 import { SDKRequestOptions } from "../types/common";
 import { SDKError } from "@src/shared/error";
 import { removeAttributes, requestOptions } from "../utils";
@@ -7,14 +7,14 @@ import { removeAttributes, requestOptions } from "../utils";
 import {
   GrecaleCardSensitiveDTO,
   GreecaleCardDTO,
-} from "../types/cartao.types";
+} from "../types/card.types";
 
-export class APICartao {
+export class CardApi {
   constructor(
     private client: AxiosInstance,
-    private crypto: APICrypt,
+    private crypto: CryptApi,
   ) {
-    this.crypto = new APICrypt(client);
+    this.crypto = new CryptApi(client);
   }
 
   public async getByProxy(
