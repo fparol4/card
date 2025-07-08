@@ -33,6 +33,11 @@ export type IAccountContactDTO = {
   mobile: string;
 };
 
+export type IAccountInfoDTO = {
+  idCorecard: string;
+  context?: IAccountContext;
+};
+
 export type IAccountDTO = {
   email: string;
   name: string;
@@ -66,6 +71,6 @@ export type ICreateAccountResDTO = {
 
 /** SERVICE **/
 export type ICorecardAccountService = {
-  create: (params: ICreateAccountDTO) => Promise<IAccountDTO>;
-  getOne: (params: IGetAccountDTO) => Promise<IAccountDTO>;
+  create: (params: ICreateAccountDTO) => Promise<IAccountInfoDTO>;
+  getOne: (params: IGetAccountDTO) => Promise<IAccountInfoDTO>;
 };

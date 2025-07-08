@@ -1,6 +1,7 @@
 import { GrecaleClient } from "@src/greecale/client";
 import {
   IAccountDTO,
+  IAccountInfoDTO,
   ICorecardAccountService,
   ICreateAccountDTO,
   IGetAccountDTO,
@@ -16,13 +17,13 @@ export class CorecardAccountService implements ICorecardAccountService {
    Para permanecer respeitando os contratos (e o fluxo)
    mantemos a implementação do método. 
    */
-  public async create(params: ICreateAccountDTO): Promise<IAccountDTO> {
+  public async create(params: ICreateAccountDTO): Promise<IAccountInfoDTO> {
     return {
       idCorecard: null,
     };
   }
 
-  public async getOne(params: IGetAccountDTO): Promise<IAccountDTO> {
+  public async getOne(params: IGetAccountDTO): Promise<IAccountInfoDTO> {
     // OPEN: How to implement the `getAccount` method ?
     return {
       idCorecard: null,

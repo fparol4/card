@@ -11,18 +11,16 @@ import {
 import { accountPFMock } from "./mocks/account.mock";
 import { logger } from "@src/greecale/utils";
 
-test("Should create a new card", () => {
-  const sdk = new GrecaleSDK(settings);
+const sdk = new GrecaleSDK(settings);
 
-  const payload: ICreateCardDTO = {
-    account: accountPFMock,
-    brand: CardBrand["VISA"],
-    holder: {
-      type: CardHolderType.HOLDER,
-      name: "TESTE-01",
-    },
-    type: CardType.PHYSICAL,
-  };
+const payload: ICreateCardDTO = {
+  account: accountPFMock,
+  brand: CardBrand["VISA"],
+  holder: {
+    type: CardHolderType.HOLDER,
+    name: "TESTE-01",
+  },
+  type: CardType.PHYSICAL,
+};
 
-  logger({ payload });
-});
+// logger({ payload });
