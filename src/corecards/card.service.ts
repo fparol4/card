@@ -12,11 +12,11 @@ import {
 export class CorecardCardService implements ICorecardCardService {
   constructor(public client: GrecaleClient) {}
 
-  create(params: ICreateCardDTO): Promise<ICardDTO> {}
+  async create(params: ICreateCardDTO): Promise<ICardDTO> {}
 
-  getOne(params: IGetCardDTO): Promise<ICardDTO | ICardSensitiveDTO> {}
+  async getOne(params: IGetCardDTO): Promise<ICardDTO | ICardSensitiveDTO> {}
 
-  getAll(params: IGetAllCardsDTO): Promise<ICardDTO[]> {}
+  async getAll(params: IGetAllCardsDTO): Promise<ICardDTO[]> {}
 
-  changeStatus(params: IUpdateCardStatusDTO): Promise<boolean> {}
+  async changeStatus(params: IUpdateCardStatusDTO): Promise<boolean> {}
 }
