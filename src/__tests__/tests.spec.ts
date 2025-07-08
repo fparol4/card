@@ -1,26 +1,29 @@
-import { GrecaleSDK } from "@src/corecards/sdk";
-import { settings } from "./misc/settings";
+import { CorecardAccountService } from "@src/corecards/account.service";
+import { ICreateAccountDTO, IGetAccountDTO } from "@src/corecards/types/account.types";
 
-import {
-  CardBrand,
-  CardHolderType,
-  CardType,
-  ICreateCardDTO,
-} from "@src/corecards/types/card.types";
+// Mock do client, se necessário
+const mockClient = {} as any;
 
-import { accountPFMock } from "./mocks/account.mock";
-import { logger } from "@src/greecale/utils";
+describe("CorecardAccountService", () => {
+  const service = new CorecardAccountService(mockClient);
 
-const sdk = new GrecaleSDK(settings);
+  it("deve criar uma conta", async () => {
+    const payload: ICreateAccountDTO = {
+      // preencha com dados válidos conforme seu tipo
+      email: "test@example.com",
+      name: "Test",
+      type: 1,
+      contact: { phone: "123", mobile: "456" },
+      bank: { code: "001", agency: "0001", account: "12345", digit: "6" },
+      address: { zipcode: "00000-000", state: "SP", street: "Rua X", city: "Y", neighborhood: "Centro" }
+    };
+    const result = await service.create(payload);
+    expect(result).toHaveProperty("idCorecard");
+  });
 
-const payload: ICreateCardDTO = {
-  account: accountPFMock,
-  brand: CardBrand["VISA"],
-  holder: {
-    type: CardHolderType.HOLDER,
-    name: "TESTE-01",
-  },
-  type: CardType.PHYSICAL,
-};
-
-// logger({ payload });
+  it("deve buscar uma conta", async () => {
+    const params: IGetAccountDTO = { idCorecard: "mocked-account-id" };
+    const result = await service.getOne(params);
+    expect(result.idCorecard).toBe("mocked-account-id");
+  });
+});

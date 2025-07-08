@@ -18,15 +18,18 @@ export class CorecardAccountService implements ICorecardAccountService {
    mantemos a implementação do método. 
    */
   public async create(params: ICreateAccountDTO): Promise<IAccountInfoDTO> {
+    // Retorna uma conta mockada
     return {
-      idCorecard: null,
+      idCorecard: 'mocked-account-id',
+      context: {},
     };
   }
 
   public async getOne(params: IGetAccountDTO): Promise<IAccountInfoDTO> {
-    // OPEN: How to implement the `getAccount` method ?
+    // Retorna uma conta mockada com o id solicitado
     return {
-      idCorecard: null,
+      idCorecard: params.idCorecard || 'mocked-account-id',
+      context: {},
     };
   }
 }
