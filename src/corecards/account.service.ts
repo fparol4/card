@@ -1,3 +1,4 @@
+import { GrecaleClient } from "@src/greecale/client";
 import {
   IAccountDTO,
   ICorecardAccountService,
@@ -6,7 +7,7 @@ import {
 } from "./types/account.types";
 
 export class CorecardAccountService implements ICorecardAccountService {
-  constructor(public client: CorecardClient) {}
+  constructor(public client: GrecaleClient) {}
 
   /**
    O SDK Grecale registra uma conta junto 

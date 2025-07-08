@@ -1,3 +1,4 @@
+import { GrecaleClient } from "@src/greecale/client";
 import {
   ICardDTO,
   ICardSensitiveDTO,
@@ -9,7 +10,7 @@ import {
 } from "./types/card.types";
 
 export class CorecardCardService implements ICorecardCardService {
-  constructor(public client: CorecardClient) {}
+  constructor(public client: GrecaleClient) {}
 
   create(params: ICreateCardDTO): Promise<ICardDTO> {}
 
