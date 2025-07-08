@@ -1,26 +1,26 @@
 import { IAccountDTO } from "../types/account.types";
 
-export declare enum CardType {
+export const enum CardType {
   VIRTUAL = 1,
   PHYSICAL = 2,
   PRIVATE_LABEL = 3,
   PHYSICAL_NO_NAME = 4,
 }
-export declare enum CardBrand {
+export const enum CardBrand {
   MASTERCARD = 1,
   VISA = 2,
 }
-export declare enum CardHolderType {
+export const enum CardHolderType {
   HOLDER = 1,
   ADDITIONAL = 2,
 }
-export declare enum CardStatus {
+export const enum CardStatus {
   CREATING = 1,
   ACTIVE = 2,
   BLOCKED = 5,
   CANCELED = 6,
 }
-export declare enum CardProduct {
+export const enum CardProduct {
   DEBIT = 1,
   CREDIT = 2,
   PRIVATE_LABEL = 3,
