@@ -6,13 +6,14 @@
   "license": "MIT",
   "scripts": {
     "co:login": "aws codeartifact login --tool npm --repository bankeiro-backend --domain bankeiro --domain-owner 367063506873 --region us-west-2",
+    "co:login:dev": "aws codeartifact login --tool npm --repository bankeiro-backend-dev --domain bankeiro --domain-owner 367063506873 --region us-west-2",
     "test": "jest --config jest.config.ts",
     "test:unit": "yarn test --runInBand --verbose",
     "lint": "npx @biomejs/biome lint --write",
     "lint:fix": "npx @biomejs/biome lint --fix"
   },
   "dependencies": {
-    "@bankeiro/bankeiro-backend-corecard": "file:../sdk-interfaces",
+    "@bankeiro/bankeiro-backend-corecard": "^0.0.4",
     "@hyperflake/http-errors": "^1.0.0",
     "axios": "^1.10.0"
   },

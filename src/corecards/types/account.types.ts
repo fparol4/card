@@ -11,11 +11,6 @@ export type IGetAccountDTO = {
 };
 
 /** ACCOUNT **/
-export type IAccountDTO = {
-  idCorecard: string;
-  context?: IAccountContext;
-};
-
 export type IAccountAddressDTO = {
   zipcode: string;
   state: string;
@@ -38,7 +33,7 @@ export type IAccountContactDTO = {
   mobile: string;
 };
 
-export type ICreateAccountDTO = {
+export type IAccountDTO = {
   email: string;
   name: string;
   type: IAccountType;
@@ -59,6 +54,14 @@ export type ICreateAccountDTO = {
   contact: IAccountContactDTO;
   bank: IAccountBankDTO;
   address: IAccountAddressDTO;
+};
+
+// -- requests
+export type ICreateAccountDTO = IAccountDTO;
+
+export type ICreateAccountResDTO = {
+  idCorecard: string;
+  context?: IAccountContext;
 };
 
 /** SERVICE **/

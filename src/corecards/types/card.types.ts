@@ -1,11 +1,30 @@
-import {
-  CardBrand,
-  CardHolderType,
-  CardStatus,
-  CardType,
-} from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/enum";
-
 import { IAccountDTO } from "../types/account.types";
+
+export declare enum CardType {
+  VIRTUAL = 1,
+  PHYSICAL = 2,
+  PRIVATE_LABEL = 3,
+  PHYSICAL_NO_NAME = 4,
+}
+export declare enum CardBrand {
+  MASTERCARD = 1,
+  VISA = 2,
+}
+export declare enum CardHolderType {
+  HOLDER = 1,
+  ADDITIONAL = 2,
+}
+export declare enum CardStatus {
+  CREATING = 1,
+  ACTIVE = 2,
+  BLOCKED = 5,
+  CANCELED = 6,
+}
+export declare enum CardProduct {
+  DEBIT = 1,
+  CREDIT = 2,
+  PRIVATE_LABEL = 3,
+}
 
 export type ICardHolder = {
   type: CardHolderType;
