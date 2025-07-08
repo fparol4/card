@@ -1,5 +1,8 @@
+import { IAccountType } from ".";
+
 export type IAccountContext = Record<string, string>;
 
+/** DTOS **/
 export type IGetAccountDTO = {
   idBankeiro?: string;
   idCorecard?: string;
@@ -7,12 +10,13 @@ export type IGetAccountDTO = {
   context?: IAccountContext;
 };
 
+/** ACCOUNT **/
 export type IAccountDTO = {
   idCorecard: string;
   context?: IAccountContext;
 };
 
-export type IAccountAddress = {
+export type IAccountAddressDTO = {
   zipcode: string;
   state: string;
   street: string;
@@ -22,17 +26,17 @@ export type IAccountAddress = {
   reference?: string;
 };
 
-export type IAccountBank = {
+export type IAccountBankDTO = {
   code: string;
   agency: string;
   account: string;
   digit: string;
 };
 
-export enum IAccountType {
-  "PF" = 1,
-  "PJ" = 2,
-}
+export type IAccountContactDTO = {
+  phone: string;
+  mobile: string;
+};
 
 export type ICreateAccountDTO = {
   email: string;
@@ -52,17 +56,13 @@ export type ICreateAccountDTO = {
   rgIssuingAuthority?: string; // SSP
   cnpj?: string;
 
-  // -- contact
-  contact: {
-    phone: string;
-    mobile: string;
-  };
-
-  bank: IAccountBank;
-  address: IAccountAddress;
+  contact: IAccountContactDTO;
+  bank: IAccountBankDTO;
+  address: IAccountAddressDTO;
 };
 
-export type IAccountService = {
-  createAccount: (params: ICreateAccountDTO) => Promise<IAccountDTO>;
-  getAccount: (params: IGetAccountDTO) => Promise<IAccountDTO>;
+/** SERVICE **/
+export type ICorecardAccountService = {
+  create: (params: ICreateAccountDTO) => Promise<IAccountDTO>;
+  getOne: (params: IGetAccountDTO) => Promise<IAccountDTO>;
 };
