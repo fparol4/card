@@ -1,4 +1,5 @@
 import { IAccountType } from "@src/corecards/types";
+
 import {
   IAccountAddressDTO,
   IAccountBankDTO,
@@ -6,23 +7,23 @@ import {
   IAccountDTO,
 } from "@src/corecards/types/account.types";
 
-export const accountPFMock: IAccountDTO = {
+export const accountPF: IAccountDTO = {
   email: "alice.smith@example.com",
   name: "Alice",
   lastName: "Smith",
   motherName: "Maria Smith",
   gender: "F",
-  birthDate: "1990-12-05",
+  birthDate: "19901205",
   type: IAccountType.PF,
 
-  cpf: "12345678909",
+  cpf: "47988302086",
   rg: "12.345.678",
   rgIssuingState: "SP",
   rgIssuingAuthority: "SSP",
 
   contact: {
-    phone: "(31) 3333-4444",
-    mobile: "(31) 98888-7777",
+    phone: "3133334444",
+    mobile: "31988887777",
   } as IAccountContactDTO,
 
   bank: {

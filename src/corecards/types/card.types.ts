@@ -36,7 +36,7 @@ export type ICorecardContext = Record<string, string>;
 /** DTOS **/
 export type ICardDTO = {
   idCorecard: string;
-  status: CardStatus;
+  status?: CardStatus;
   context?: ICorecardContext;
   createdAt?: string;
   updatedAt?: string;

@@ -7,7 +7,7 @@ import {
   ICreateCardDTO,
 } from "@src/corecards/types/card.types";
 
-import { accountPFMock } from "./mocks/account.mock";
+import * as mocks from "./mocks";
 import { logger } from "@src/greecale/utils";
 import { settings } from "./misc/settings";
 
@@ -15,7 +15,7 @@ test("Add card for AccountType.PF", async () => {
   const sdk = new GrecaleSDK(settings);
 
   const payload: ICreateCardDTO = {
-    account: accountPFMock,
+    account: { ...mocks.accountPF, cpf: "40628606001" },
     brand: CardBrand.VISA,
     holder: {
       type: CardHolderType.HOLDER,
@@ -26,6 +26,6 @@ test("Add card for AccountType.PF", async () => {
 
   const card = await sdk.card.create(payload);
 
-  logger({ payload });
-  expect(1).toBe(1);
+  logger({ payload, card: JSON.stringify(card) });
+  expect(true).toBeTruthy();
 });

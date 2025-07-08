@@ -8,9 +8,13 @@ import { InvoicesApi } from "./apis/invoices";
 import { LimitsApi } from "./apis/limits";
 import { TransactionsApi } from "./apis/transactions";
 import { CardSecurityApi } from "./apis/card-security";
+import { requestOptions } from "./utils";
+import { SDKError } from "@src/shared/error";
+import { SDKAuthResDTO } from "./types/common";
 
 export class GrecaleClient {
   private client: AxiosInstance;
+  public settings: ICorecardSettings;
 
   public cards: CardApi;
   public cardSecurity: CardSecurityApi;
@@ -20,9 +24,9 @@ export class GrecaleClient {
   public limitsApi: LimitsApi;
   public transactionsApi: TransactionsApi;
 
-  constructor(params: ICorecardSettings) {
-    const { apiUrl, credentials } = params;
-    this.client = axios.create({ baseURL: apiUrl });
+  constructor(settings: ICorecardSettings) {
+    this.settings = settings;
+    this.client = axios.create({ baseURL: settings.apiUrl });
     this.cryptApi = new CryptApi(this.client);
     this.cards = new CardApi(this.client, this.cryptApi);
     this.cardHolders = new CardHoldersApi(this.client);
@@ -30,5 +34,19 @@ export class GrecaleClient {
     this.invoicesApi = new InvoicesApi(this.client);
     this.limitsApi = new LimitsApi(this.client);
     this.transactionsApi = new TransactionsApi(this.client);
+  }
+
+  public async authenticate() {
+    try {
+      const { data } = await this.client.post<SDKAuthResDTO>(
+        "/autenticacao/token-jwt",
+        this.settings.credentials,
+        requestOptions(),
+      );
+
+      return data.token;
+    } catch (error) {
+      throw new SDKError("Unauthorized", error);
+    }
   }
 }

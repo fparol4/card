@@ -1,12 +1,14 @@
+import { AccountGender } from "@src/corecards/types/account.types";
+
 export interface ICardHolderDTO {
   /* Produto e Entregadora */
-  produto: number;
-  codigoEntregadora: number;
+  produto: string;
+  codigoEntregadora: string;
 
   /* Detalhes Cartão */
-  tipoCartao: number;
-  codigoPlastico: number;
-  tipoPlastico: number;
+  tipoCartao: string;
+  codigoPlastico: string;
+  tipoPlastico: string;
 
   /* Empregador e Contrato */
   codigoEmpregador: number;
@@ -15,8 +17,8 @@ export interface ICardHolderDTO {
   cargo: string;
   dataAdmissao: string;
   salario?: number;
-  limiteCredito?: number;
-  geraSenhaAtivacao: boolean;
+  limiteCredito?: string;
+  geraSenhaAtivacao: string;
 
   /* Informação Pessoal */
   nomeCompleto: string;
@@ -24,7 +26,7 @@ export interface ICardHolderDTO {
   sobreNome: string;
   nomeSocial: string;
   dataNascimento: string;
-  sexo: "M" | "F" | "S";
+  sexo: AccountGender;
   estadoCivil: string;
   nacionalidade: string;
   cpf: string;
@@ -59,11 +61,11 @@ export interface ICardHolderDTO {
   codigoContaCorrente?: string;
   digitoContaCorrente?: string;
   codigoVencimentoFatura: number;
-  tipoEnvioFatura: number;
+  tipoEnvioFatura: string;
   cnpjCorrespondente?: string;
 
   /* Embossadora e Associacao */
-  geraEmbossing: boolean;
+  geraEmbossing: string;
   embossadora: string;
   permiteAssociacaoMultipla?: boolean;
   RMC?: string;
@@ -71,7 +73,7 @@ export interface ICardHolderDTO {
 
 export type IAddCardHolderDTO = ICardHolderDTO;
 
-export type IAddCardHolderResponse = {
+export type IAddCardHolderResDTO = {
   cartao: string;
   proxy: string;
   dataVencimento: string;

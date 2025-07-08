@@ -38,6 +38,8 @@ export type IAccountInfoDTO = {
   context?: IAccountContext;
 };
 
+export type AccountGender = "M" | "F" | "S";
+
 export type IAccountDTO = {
   email: string;
   name: string;
@@ -46,7 +48,7 @@ export type IAccountDTO = {
   // additional
   lastName?: string;
   motherName?: string;
-  gender?: string; // "M | F" (PF) "S" (PJ)
+  gender?: AccountGender; // "M | F" (PF) "S" (PJ)
   birthDate?: string;
 
   // -- documents

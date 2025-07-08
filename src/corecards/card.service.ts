@@ -8,15 +8,19 @@ import {
   IGetCardDTO,
   IUpdateCardStatusDTO,
 } from "./types/card.types";
-import { createCardDTOToAddCardHolderDTO } from "./mappers/card.mapper";
+
+import { createCardMapper } from "@src/shared/mappers/create-card.mapper";
 
 export class CorecardCardService implements ICorecardCardService {
   constructor(public client: GrecaleClient) {}
 
   async create(params: ICreateCardDTO): Promise<ICardDTO> {
-    const payload = createCardDTOToAddCardHolderDTO(params)
-    const card = await this.client.cardHolders.addCardHolder(payload);
-    return this._toDTO(card)
+    const token = await this.client.authenticate();
+    const payload = createCardMapper.toClient(params);
+    const card = await this.client.cardHolders.addCardHolder(payload, {
+      token,
+    });
+    return createCardMapper.toSdk(card);
   }
 
   async getOne(params: IGetCardDTO): Promise<ICardDTO | ICardSensitiveDTO> {
@@ -28,9 +32,9 @@ export class CorecardCardService implements ICorecardCardService {
         context: {},
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        number: '4111111111111111',
-        expiration: '12/29',
-        cvv: '123',
+        number: "4111111111111111",
+        expiration: "12/29",
+        cvv: "123",
       };
     }
     return {
@@ -46,14 +50,14 @@ export class CorecardCardService implements ICorecardCardService {
     // Retorna uma lista de cartões mockados
     return [
       {
-        idCorecard: 'mocked-card-1',
+        idCorecard: "mocked-card-1",
         status: 2, // CardStatus.ACTIVE
         context: {},
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       },
       {
-        idCorecard: 'mocked-card-2',
+        idCorecard: "mocked-card-2",
         status: 5, // CardStatus.BLOCKED
         context: {},
         createdAt: new Date().toISOString(),
