@@ -1,5 +1,4 @@
 import { GrecaleSDK } from "@src/corecards/sdk";
-import { settings } from "./misc/settings";
 
 import {
   CardBrand,
@@ -10,6 +9,7 @@ import {
 
 import { accountPFMock } from "./mocks/account.mock";
 import { logger } from "@src/greecale/utils";
+import { settings } from "./misc/settings";
 
 test("Add card for AccountType.PF", async () => {
   const sdk = new GrecaleSDK(settings);
