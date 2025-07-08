@@ -11,11 +11,8 @@
     "paths": {
       "@src/*": ["src/*"],
       "@app/*": ["src/app/*"],
-      "@config/*": ["src/config/*"],
-      "@clients/*": ["src/app/clients/*"],
-      "@modules/*": ["src/app/modules/*"],
-      "@common/*": ["src/app/common/*"],
-      "@shared/*": ["src/shared/*"]
+      "@shared/*": ["src/shared/*"],
+      "@tests/*": ["src/__tests__/*"]
     },
     "typeRoots": ["src/utils", "./node_modules/@types"],
     "pretty": false,

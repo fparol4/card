@@ -57,7 +57,7 @@ export type ICreateCardDTO = {
 
 export type IGetCardDTO = {
   idCorecard: string;
-  withSensitive?: string;
+  withSensitive?: boolean;
   context?: ICorecardContext;
 };
 

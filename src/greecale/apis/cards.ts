@@ -2,12 +2,9 @@ import { AxiosInstance } from "axios";
 import { CryptApi } from "./crypt";
 import { SDKRequestOptions } from "../types/common";
 import { SDKError } from "@src/shared/error";
-import { removeAttributes, requestOptions } from "../utils";
+import { logger, removeAttributes, requestOptions } from "../utils";
 
-import {
-  GrecaleCardSensitiveDTO,
-  GreecaleCardDTO,
-} from "../types/card.types";
+import { GrecaleCardSensitiveDTO, GreecaleCardDTO } from "../types/card.types";
 
 export class CardApi {
   constructor(
@@ -17,23 +14,14 @@ export class CardApi {
     this.crypto = new CryptApi(client);
   }
 
-  public async getByProxy(
-    proxy: string,
-    withSensitive?: boolean,
-    options?: SDKRequestOptions,
-  ) {
+  public async getByProxy(proxy: string, options?: SDKRequestOptions) {
     try {
       const { data: card } = await this.client.get(
         `/cartao/proxy/${proxy}`,
         requestOptions(options),
       );
 
-      if (withSensitive) {
-        const cardWithSensitive = this._getSensitive(card, options);
-        return cardWithSensitive;
-      }
-
-      return this._toDTO(card);
+      return this._getSensitive(card, options);
     } catch (error) {
       throw new SDKError("get card by proxy > error", error);
     }
@@ -49,11 +37,5 @@ export class CardApi {
       dataVencimento: await this.crypto.decrypt(card.dataVencimento, options),
       cvc2: await this.crypto.decrypt(card.cvc2, options),
     };
-  }
-
-  private _toDTO(payload: GrecaleCardSensitiveDTO): GreecaleCardDTO {
-    const toRemove = ["cartao", "cvc2", "dataVencimento"];
-    const cardWithoutSensitive = removeAttributes(payload, toRemove);
-    return cardWithoutSensitive;
   }
 }

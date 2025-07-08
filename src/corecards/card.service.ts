@@ -10,6 +10,8 @@ import {
 } from "./types/card.types";
 
 import { createCardMapper } from "@src/shared/mappers/create-card.mapper";
+import { cardMapper } from "@src/shared/mappers/card.mapper";
+import { logger } from "@src/greecale/utils";
 
 export class CorecardCardService implements ICorecardCardService {
   constructor(public client: GrecaleClient) {}
@@ -24,26 +26,14 @@ export class CorecardCardService implements ICorecardCardService {
   }
 
   async getOne(params: IGetCardDTO): Promise<ICardDTO | ICardSensitiveDTO> {
-    // Retorna um cartão mockado (com ou sem dados sensíveis)
+    const token = await this.client.authenticate();
+    const card = await this.client.cards.getByProxy(params.idCorecard, {
+      token,
+    });
     if (params.withSensitive) {
-      return {
-        idCorecard: params.idCorecard,
-        status: 2, // CardStatus.ACTIVE
-        context: {},
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        number: "4111111111111111",
-        expiration: "12/29",
-        cvv: "123",
-      };
+      return cardMapper.toSensitiveDTO(card);
     }
-    return {
-      idCorecard: params.idCorecard,
-      status: 2, // CardStatus.ACTIVE
-      context: {},
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
+    return cardMapper.toDTO(card);
   }
 
   async getAll(params: IGetAllCardsDTO): Promise<ICardDTO[]> {
