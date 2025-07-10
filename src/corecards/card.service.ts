@@ -14,9 +14,6 @@ import { createCardMapper } from "@src/shared/mappers/create-card.mapper";
 import { cardMapper } from "@src/shared/mappers/card.mapper";
 import { logger } from "@src/greecale/utils";
 
-// Banco de cartões em memória para simulação
-export const cardDB: Record<string, ICardDTO> = {};
-
 export class CorecardCardService implements ICorecardCardService {
   constructor(public client: GrecaleClient) {}
 
@@ -26,17 +23,10 @@ export class CorecardCardService implements ICorecardCardService {
     const card = await this.client.cardHolders.addCardHolder(payload, {
       token,
     });
-    // Simula cartão criado com status ACTIVE
-    const sdkCard = { ...createCardMapper.toSdk(card), status: CardStatus.ACTIVE };
-    cardDB[sdkCard.idCorecard] = sdkCard;
-    return sdkCard;
+    return createCardMapper.toSdk(card);
   }
 
   async getOne(params: IGetCardDTO): Promise<ICardDTO | ICardSensitiveDTO> {
-    // Se existir no banco em memória, retorna de lá
-    if (cardDB[params.idCorecard]) {
-      return cardDB[params.idCorecard];
-    }
     const token = await this.client.authenticate();
     const card = await this.client.cards.getByProxy(params.idCorecard, {
       token,
@@ -61,11 +51,7 @@ export class CorecardCardService implements ICorecardCardService {
     if (params.newStatus === CardStatus.CANCELED) {
       throw new Error("Não é permitido alterar o status para CANCELED");
     }
-    // Altera o status no banco em memória, se existir
-    if (cardDB[params.card.idCorecard]) {
-      cardDB[params.card.idCorecard].status = params.newStatus;
-      return true;
-    }
-    return false;
+    // Simula alteração de status (ajuste conforme integração real)
+    return true;
   }
 }

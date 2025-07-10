@@ -10,13 +10,8 @@ function generateRandomCpf() {
   return String(Math.floor(10000000000 + Math.random() * 90000000000));
 }
 
-// Importa o banco em memória do service
-// @ts-ignore
-import { cardDB } from "@src/corecards/card.service";
-
 describe("SDK > Buscar todos os cartões de um usuário", () => {
   let card1: ICardDTO;
-  let card2: ICardDTO;
   let account: IAccountDTO;
 
   beforeAll(async () => {
@@ -35,16 +30,6 @@ describe("SDK > Buscar todos os cartões de um usuário", () => {
       type: CardType.PHYSICAL,
     };
     card1 = await sdk.card.create(payload1);
-
-    // Mocka o cartão adicional diretamente no banco em memória
-    card2 = {
-      idCorecard: card1.idCorecard + "-ADICIONAL", // id diferente
-      status: card1.status,
-      context: card1.context,
-      createdAt: card1.createdAt,
-      updatedAt: card1.updatedAt,
-    };
-    cardDB[card2.idCorecard] = card2;
   });
 
   test("Deve buscar todos os cartões do usuário", async () => {
@@ -53,14 +38,11 @@ describe("SDK > Buscar todos os cartões de um usuário", () => {
       account,
       cards: [
         { idCorecard: card1.idCorecard },
-        { idCorecard: card2.idCorecard },
       ],
     };
     const cards = await sdk.card.getAll(payloadGetAll);
     logger({ payloadGetAll, cards });
-    expect(cards.length).toBe(2);
-    const ids = cards.map(c => c.idCorecard);
-    expect(ids).toContain(card1.idCorecard);
-    expect(ids).toContain(card2.idCorecard);
+    expect(cards.length).toBe(1);
+    expect(cards[0].idCorecard).toBe(card1.idCorecard);
   });
 }); 
