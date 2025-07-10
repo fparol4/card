@@ -63,7 +63,7 @@ export type IGetCardDTO = {
 
 export type IGetAllCardsDTO = {
   account: IAccountDTO;
-  cards: IGetCardDTO;
+  cards: IGetCardDTO[];
   context?: ICorecardContext;
 };
 
