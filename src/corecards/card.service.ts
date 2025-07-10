@@ -15,7 +15,7 @@ import { cardMapper } from "@src/shared/mappers/card.mapper";
 import { logger } from "@src/greecale/utils";
 
 export class CorecardCardService implements ICorecardCardService {
-  constructor(public client: GrecaleClient) {}
+  constructor(private client: GrecaleClient) {}
 
   async create(params: ICreateCardDTO): Promise<ICardDTO> {
     const token = await this.client.authenticate();
@@ -38,20 +38,10 @@ export class CorecardCardService implements ICorecardCardService {
   }
 
   async getAll(params: IGetAllCardsDTO): Promise<ICardDTO[]> {
-    const cardsToFetch = Array.isArray(params.cards) ? params.cards : [params.cards];
-    const results: ICardDTO[] = [];
-    for (const cardParams of cardsToFetch) {
-      const card = await this.getOne(cardParams);
-      results.push(card as ICardDTO);
-    }
-    return results;
+    const promises = params.cards.map((card) => this.getOne(card));
+    const cards: ICardDTO[] = await Promise.all(promises);
+    return cards;
   }
 
-  async changeStatus(params: IUpdateCardStatusDTO): Promise<boolean> {
-    if (params.newStatus === CardStatus.CANCELED) {
-      throw new Error("Não é permitido alterar o status para CANCELED");
-    }
-    // Simula alteração de status (ajuste conforme integração real)
-    return true;
-  }
+  async changeStatus(params: IUpdateCardStatusDTO): Promise<boolean> {}
 }
