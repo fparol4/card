@@ -1,17 +1,19 @@
 import { GrecaleClient } from "@src/greecale/client";
 import { CorecardAccountService } from "./account.service";
-import { ICorecardAccountService } from "./types/account.types";
-import { ICorecardCardService } from "./types/card.types";
 import { CorecardCardService } from "./card.service";
-import { ICorecard, ICorecardSettings } from "./types/corecard.types";
+import { IBCCAccount } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account";
+import { IBCCCard } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card";
+import {
+  IBCC,
+  IBCCSettings,
+} from "@bankeiro/bankeiro-backend-corecard/src/index";
 
-export class GrecaleSDK implements ICorecard {
+export class GrecaleSDK implements IBCC {
   private client: GrecaleClient;
+  public account: IBCCAccount;
+  public card: IBCCCard;
 
-  public account: ICorecardAccountService;
-  public card: ICorecardCardService;
-
-  constructor(settings: ICorecardSettings) {
+  constructor(settings: IBCCSettings) {
     this.client = new GrecaleClient(settings);
     this.account = new CorecardAccountService(this.client);
     this.card = new CorecardCardService(this.client);

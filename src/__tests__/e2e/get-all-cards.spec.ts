@@ -1,9 +1,15 @@
 import { GrecaleSDK } from "@src/corecards/sdk";
-import { CardBrand, CardHolderType, CardType, ICardDTO } from "@src/corecards/types/card.types";
-import { IAccountDTO } from "@src/corecards/types/account.types";
+
 import { logger } from "@src/greecale/utils";
 import * as mocks from "@tests/mocks/";
 import { settings } from "@tests/misc/settings";
+import { IBCCCardDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/card";
+import { IBCCAccountDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/account";
+import {
+  IBCCCardBrand,
+  IBCCCardHolderType,
+  IBCCCardType,
+} from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/enum";
 
 // Função simples para gerar um CPF aleatório (não garante validade real, mas evita duplicidade para teste)
 function generateRandomCpf() {
@@ -11,8 +17,8 @@ function generateRandomCpf() {
 }
 
 describe("SDK > Buscar todos os cartões de um usuário", () => {
-  let card1: ICardDTO;
-  let account: IAccountDTO;
+  let card1: IBCCCardDTO;
+  let account: IBCCAccountDTO;
 
   beforeAll(async () => {
     const sdk = new GrecaleSDK(settings);
@@ -22,12 +28,12 @@ describe("SDK > Buscar todos os cartões de um usuário", () => {
     // Cria o cartão titular via API
     const payload1 = {
       account,
-      brand: CardBrand.VISA,
+      brand: IBCCCardBrand.VISA,
       holder: {
-        type: CardHolderType.HOLDER,
+        type: IBCCCardHolderType.HOLDER,
         name: "USER-TITULAR",
       },
-      type: CardType.PHYSICAL,
+      type: IBCCCardType.PHYSICAL,
     };
     card1 = await sdk.card.create(payload1);
   });
@@ -36,13 +42,12 @@ describe("SDK > Buscar todos os cartões de um usuário", () => {
     const sdk = new GrecaleSDK(settings);
     const payloadGetAll = {
       account,
-      cards: [
-        { idCorecard: card1.idCorecard },
-      ],
+      cards: [{ idCorecard: card1.idCorecard }],
     };
     const cards = await sdk.card.getAll(payloadGetAll);
     logger({ payloadGetAll, cards });
     expect(cards.length).toBe(1);
     expect(cards[0].idCorecard).toBe(card1.idCorecard);
   });
-}); 
+});
+

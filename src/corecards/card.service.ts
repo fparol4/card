@@ -1,23 +1,22 @@
 import { GrecaleClient } from "@src/greecale/client";
-import {
-  ICardDTO,
-  ICardSensitiveDTO,
-  ICorecardCardService,
-  ICreateCardDTO,
-  IGetAllCardsDTO,
-  IGetCardDTO,
-  IUpdateCardStatusDTO,
-  CardStatus,
-} from "./types/card.types";
-
 import { createCardMapper } from "@src/shared/mappers/create-card.mapper";
 import { cardMapper } from "@src/shared/mappers/card.mapper";
-import { logger } from "@src/greecale/utils";
 
-export class CorecardCardService implements ICorecardCardService {
+import { IBCCCard } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/index";
+import { IBCCCreateCardDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/dtos/create";
+import {
+  IBCCGetAllCardsDTO,
+  IBCCGetCardDTO,
+} from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/dtos/get";
+import {
+  IBCCCardDTO,
+  IBCCCardSensitiveDTO,
+} from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/card";
+
+export class CorecardCardService implements IBCCCard {
   constructor(private client: GrecaleClient) {}
 
-  async create(params: ICreateCardDTO): Promise<ICardDTO> {
+  async create(params: IBCCCreateCardDTO): Promise<IBCCCardDTO> {
     const token = await this.client.authenticate();
     const payload = createCardMapper.toClient(params);
     const card = await this.client.cardHolders.addCardHolder(payload, {
@@ -26,7 +25,9 @@ export class CorecardCardService implements ICorecardCardService {
     return createCardMapper.toSdk(card);
   }
 
-  async getOne(params: IGetCardDTO): Promise<ICardDTO | ICardSensitiveDTO> {
+  async getOne(
+    params: IBCCGetCardDTO,
+  ): Promise<IBCCCardDTO | IBCCCardSensitiveDTO> {
     const token = await this.client.authenticate();
     const card = await this.client.cards.getByProxy(params.idCorecard, {
       token,
@@ -37,9 +38,9 @@ export class CorecardCardService implements ICorecardCardService {
     return cardMapper.toDTO(card);
   }
 
-  async getAll(params: IGetAllCardsDTO): Promise<ICardDTO[]> {
+  async getAll(params: IBCCGetAllCardsDTO): Promise<IBCCCardDTO[]> {
     const promises = params.cards.map((card) => this.getOne(card));
-    const cards: ICardDTO[] = await Promise.all(promises);
+    const cards: IBCCCardDTO[] = await Promise.all(promises);
     return cards;
   }
 
