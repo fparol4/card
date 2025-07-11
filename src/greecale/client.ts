@@ -1,6 +1,5 @@
 import axios, { AxiosInstance } from "axios";
 
-import { ICorecardSettings } from "@src/corecards/types/corecard.types";
 import { CardHoldersApi } from "./apis/card-holders";
 import { CardApi } from "./apis/cards";
 import { CryptApi } from "./apis/crypt";
@@ -11,10 +10,11 @@ import { CardSecurityApi } from "./apis/card-security";
 import { requestOptions } from "./utils";
 import { SDKError } from "@src/shared/error";
 import { SDKAuthResDTO } from "./types/common";
+import { IBCCSettings } from "@bankeiro/bankeiro-backend-corecard/src";
 
 export class GrecaleClient {
   private client: AxiosInstance;
-  public settings: ICorecardSettings;
+  public settings: IBCCSettings;
 
   public cards: CardApi;
   public cardSecurity: CardSecurityApi;
@@ -24,9 +24,9 @@ export class GrecaleClient {
   public limitsApi: LimitsApi;
   public transactionsApi: TransactionsApi;
 
-  constructor(settings: ICorecardSettings) {
+  constructor(settings: IBCCSettings) {
     this.settings = settings;
-    this.client = axios.create({ baseURL: settings.apiUrl });
+    this.client = axios.create({ baseURL: settings.url });
     this.cryptApi = new CryptApi(this.client);
     this.cards = new CardApi(this.client, this.cryptApi);
     this.cardHolders = new CardHoldersApi(this.client);

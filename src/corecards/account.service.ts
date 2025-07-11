@@ -1,13 +1,10 @@
 import { GrecaleClient } from "@src/greecale/client";
-import {
-  IAccountDTO,
-  IAccountInfoDTO,
-  ICorecardAccountService,
-  ICreateAccountDTO,
-  IGetAccountDTO,
-} from "./types/account.types";
+import { IBCCAccount } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account";
+import { IBCCCreateAccountDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/dtos/create";
+import { IBCCAccountDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/account";
+import { IBCCGetAccountDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/dtos/get";
 
-export class CorecardAccountService implements ICorecardAccountService {
+export class CorecardAccountService implements IBCCAccount {
   constructor(public client: GrecaleClient) {}
 
   /**
@@ -17,18 +14,18 @@ export class CorecardAccountService implements ICorecardAccountService {
    Para permanecer respeitando os contratos (e o fluxo)
    mantemos a implementação do método. 
    */
-  public async create(params: ICreateAccountDTO): Promise<IAccountInfoDTO> {
+  public async create(params: IBCCCreateAccountDTO): Promise<IBCCAccountDTO> {
     // Retorna uma conta mockada
     return {
-      idCorecard: 'mocked-account-id',
+      idCorecard: "mocked-account-id",
       context: {},
     };
   }
 
-  public async getOne(params: IGetAccountDTO): Promise<IAccountInfoDTO> {
+  public async getOne(params: IBCCGetAccountDTO): Promise<IBCCAccountDTO> {
     // Retorna uma conta mockada com o id solicitado
     return {
-      idCorecard: params.idCorecard || 'mocked-account-id',
+      idCorecard: params.idCorecard || "mocked-account-id",
       context: {},
     };
   }

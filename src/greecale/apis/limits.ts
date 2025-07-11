@@ -7,13 +7,12 @@ import {
   IGetLimitByProxyResponse,
   IUpdateLimitByProxyParams,
   IUpdateLimitByProxyBody,
-  IUpdateLimitByProxyResponse
+  IUpdateLimitByProxyResponse,
 } from "../types/limit.types";
 
 export class LimitsApi {
   constructor(public client: AxiosInstance) {}
 
-  // Obter limite por proxy
   public async getLimitByProxy(
     params: IGetLimitByProxyParams,
     options?: SDKRequestOptions,
@@ -29,7 +28,6 @@ export class LimitsApi {
     }
   }
 
-  // Atualizar limite por proxy
   public async updateLimitByProxy(
     params: IUpdateLimitByProxyParams,
     body: IUpdateLimitByProxyBody,

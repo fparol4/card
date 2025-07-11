@@ -2,22 +2,18 @@ import { AxiosInstance } from "axios";
 import { CryptApi } from "./crypt";
 import { SDKRequestOptions } from "../types/common";
 import { SDKError } from "@src/shared/error";
-import { logger, removeAttributes, requestOptions } from "../utils";
-
+import { requestOptions } from "../utils";
+import { IBCCCardStatus } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/enum";
 import {
   GrecaleCardSensitiveDTO,
-  GreecaleCardDTO,
-  IUpdateCardStatusByProxyDTO,
-  IUpdateCardStatusByProxyResponse
+  IUpdateCardStatusByProxyResponse,
 } from "../types/card.types";
-import { CardStatus } from "@src/corecards/types/card.types";
 
-// Mapeamento correto dos valores do enum CardStatus para os códigos da API
 export const GrecaleStatus = {
-  [CardStatus.CREATING]: 1,
-  [CardStatus.ACTIVE]: 22,
-  [CardStatus.CANCELED]: 67,
-  [CardStatus.BLOCKED]: 65,
+  [IBCCCardStatus.CREATING]: 1,
+  [IBCCCardStatus.ACTIVE]: 22,
+  [IBCCCardStatus.CANCELED]: 67,
+  [IBCCCardStatus.BLOCKED]: 65,
 } as const;
 
 export class CardApi {
@@ -43,7 +39,7 @@ export class CardApi {
 
   public async updateStatusByProxy(
     proxy: string,
-    newStatus: CardStatus,
+    newStatus: IBCCCardStatus,
     options?: SDKRequestOptions,
   ): Promise<boolean> {
     try {
@@ -54,18 +50,12 @@ export class CardApi {
 
       await this.client.put<IUpdateCardStatusByProxyResponse>(
         `/cartao/proxy/${proxy}/status`,
-        { codStatus: String(codStatus) }, // Enviar como string
+        { codStatus: String(codStatus) },
         requestOptions(options),
       );
 
       return true;
     } catch (error) {
-      const errObj = error as any;
-      if (errObj && errObj.response && errObj.response.data) {
-        console.log(errObj.response.data);
-      } else {
-        console.log(error);
-      }
       throw new SDKError("change card status > error", error);
     }
   }

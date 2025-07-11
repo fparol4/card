@@ -20,13 +20,12 @@ import {
   IValidatePasswordByProxyBody,
   IValidatePasswordByProxyResponse,
   ICreateRandomPasswordByProxyParams,
-  ICreateRandomPasswordByProxyResponse
+  ICreateRandomPasswordByProxyResponse,
 } from "../types/card-security.types";
 
 export class CardSecurityApi {
   constructor(public client: AxiosInstance) {}
 
-  // Obter CVV por proxy
   public async getCVVByProxy(
     params: IGetCvvByProxyParams,
     options?: SDKRequestOptions,
@@ -42,7 +41,6 @@ export class CardSecurityApi {
     }
   }
 
-  // Validar CVV por proxy
   public async validateCVVByProxy(
     params: IValidateCvvByProxyParams,
     body: IValidateCvvByProxyBody,
@@ -60,7 +58,6 @@ export class CardSecurityApi {
     }
   }
 
-  // Obter senha por proxy
   public async getPasswordByProxy(
     params: IGetPasswordByProxyParams,
     options?: SDKRequestOptions,
@@ -76,7 +73,6 @@ export class CardSecurityApi {
     }
   }
 
-  // Atualizar senha por proxy
   public async updatePasswordByProxy(
     params: IUpdatePasswordByProxyParams,
     body: IUpdatePasswordByProxyBody,
@@ -94,7 +90,6 @@ export class CardSecurityApi {
     }
   }
 
-  // Criar senha por proxy
   public async createPasswordByProxy(
     params: ICreatePasswordByProxyParams,
     body: ICreatePasswordByProxyBody,
@@ -112,7 +107,6 @@ export class CardSecurityApi {
     }
   }
 
-  // Validar senha por proxy
   public async validatePasswordByProxy(
     params: IValidatePasswordByProxyParams,
     body: IValidatePasswordByProxyBody,
@@ -130,17 +124,17 @@ export class CardSecurityApi {
     }
   }
 
-  // Criar senha aleatória por proxy
   public async createRandomPasswordByProxy(
     params: ICreateRandomPasswordByProxyParams,
     options?: SDKRequestOptions,
   ): Promise<ICreateRandomPasswordByProxyResponse> {
     try {
-      const { data } = await this.client.post<ICreateRandomPasswordByProxyResponse>(
-        `/seguranca/cartao/proxy/${params.proxy}/senha/random`,
-        {},
-        requestOptions(options),
-      );
+      const { data } =
+        await this.client.post<ICreateRandomPasswordByProxyResponse>(
+          `/seguranca/cartao/proxy/${params.proxy}/senha/random`,
+          {},
+          requestOptions(options),
+        );
       return data;
     } catch (error) {
       throw new SDKError("Unauthorized", error);

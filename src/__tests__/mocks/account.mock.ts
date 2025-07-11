@@ -1,37 +1,51 @@
-import { IAccountType } from "@src/corecards/types";
-
 import {
-  IAccountAddressDTO,
-  IAccountBankDTO,
-  IAccountContactDTO,
-  IAccountDTO,
-} from "@src/corecards/types/account.types";
+  IBCCAccountDTO,
+  IBCCAccountInfoDTO,
+} from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/account";
+import {
+  IBCCAccountContactDTO,
+  IBCCAccountBankDTO,
+  IBCCAccountAddressDTO,
+  IBCCAccountType,
+  IBCCAccountInvoiceType,
+} from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/common";
 
-export const accountPF: IAccountDTO = {
+export const accountPF: IBCCAccountInfoDTO = {
   email: "alice.smith@example.com",
   name: "Alice",
   lastName: "Smith",
   motherName: "Maria Smith",
   gender: "F",
   birthDate: "19901205",
-  type: IAccountType.PF,
+  type: IBCCAccountType.PF,
+  dueDate: "10",
+  invoiceType: IBCCAccountInvoiceType.Email,
 
   cpf: "47988302086",
   rg: "12.345.678",
   rgIssuingState: "SP",
   rgIssuingAuthority: "SSP",
 
+  occupation: {
+    salary: "3000",
+  },
   contact: {
-    phone: "3133334444",
-    mobile: "31988887777",
-  } as IAccountContactDTO,
+    phone: {
+      areaCode: "11",
+      number: "988887777",
+    },
+    mobile: {
+      areaCode: "11",
+      number: "988887777",
+    },
+  } as IBCCAccountContactDTO,
 
   bank: {
     code: "237",
     agency: "1234",
     account: "567890",
     digit: "1",
-  } as IAccountBankDTO,
+  } as IBCCAccountBankDTO,
 
   address: {
     zipcode: "30140071",
@@ -41,5 +55,5 @@ export const accountPF: IAccountDTO = {
     neighborhood: "Centro",
     complement: "Sala 100",
     reference: "Próximo ao Museu de Arte",
-  } as IAccountAddressDTO,
+  } as IBCCAccountAddressDTO,
 };

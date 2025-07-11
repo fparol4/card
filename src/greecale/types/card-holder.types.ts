@@ -1,4 +1,4 @@
-import { AccountGender } from "@src/corecards/types/account.types";
+import { IBCCAccountGender } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/common";
 
 export interface ICardHolderDTO {
   /* Produto e Entregadora */
@@ -26,7 +26,7 @@ export interface ICardHolderDTO {
   sobreNome: string;
   nomeSocial: string;
   dataNascimento: string;
-  sexo: AccountGender;
+  sexo: IBCCAccountGender;
   estadoCivil: string;
   nacionalidade: string;
   cpf: string;
