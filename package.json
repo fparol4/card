@@ -13,7 +13,7 @@
     "lint:fix": "npx @biomejs/biome lint --fix"
   },
   "dependencies": {
-    "@bankeiro/bankeiro-backend-corecard": "^0.0.4",
+    "@bankeiro/bankeiro-backend-corecard": "file:../bankeiro_core_card_backend",
     "@hyperflake/http-errors": "^1.0.0",
     "axios": "^1.10.0"
   },
