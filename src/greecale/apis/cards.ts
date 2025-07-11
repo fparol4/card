@@ -2,9 +2,19 @@ import { AxiosInstance } from "axios";
 import { CryptApi } from "./crypt";
 import { SDKRequestOptions } from "../types/common";
 import { SDKError } from "@src/shared/error";
-import { logger, removeAttributes, requestOptions } from "../utils";
+import { requestOptions } from "../utils";
+import { IBCCCardStatus } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/enum";
+import {
+  GrecaleCardSensitiveDTO,
+  IUpdateCardStatusByProxyResponse,
+} from "../types/card.types";
 
-import { GrecaleCardSensitiveDTO, GreecaleCardDTO } from "../types/card.types";
+export const GrecaleStatus = {
+  [IBCCCardStatus.CREATING]: 1,
+  [IBCCCardStatus.ACTIVE]: 22,
+  [IBCCCardStatus.CANCELED]: 67,
+  [IBCCCardStatus.BLOCKED]: 65,
+} as const;
 
 export class CardApi {
   constructor(
@@ -24,6 +34,29 @@ export class CardApi {
       return this._getSensitive(card, options);
     } catch (error) {
       throw new SDKError("get card by proxy > error", error);
+    }
+  }
+
+  public async updateStatusByProxy(
+    proxy: string,
+    newStatus: IBCCCardStatus,
+    options?: SDKRequestOptions,
+  ): Promise<boolean> {
+    try {
+      const codStatus = GrecaleStatus[newStatus];
+      if (!codStatus) {
+        throw new Error(`Status não mapeado: ${newStatus}`);
+      }
+
+      await this.client.put<IUpdateCardStatusByProxyResponse>(
+        `/cartao/proxy/${proxy}/status`,
+        { codStatus: String(codStatus) },
+        requestOptions(options),
+      );
+
+      return true;
+    } catch (error) {
+      throw new SDKError("change card status > error", error);
     }
   }
 

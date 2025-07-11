@@ -1,4 +1,7 @@
-import { ICardDTO, ICardSensitiveDTO } from "@src/corecards/types/card.types";
+import {
+  IBCCCardDTO,
+  IBCCCardSensitiveDTO,
+} from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/card";
 import {
   GrecaleCardSensitiveDTO,
   GreecaleCardDTO,
@@ -6,7 +9,7 @@ import {
 
 export const toClient = () => {};
 
-const toDTO = (payload: GreecaleCardDTO): ICardDTO => {
+const toDTO = (payload: GreecaleCardDTO): IBCCCardDTO => {
   return {
     idCorecard: payload.proxy,
     status: payload.status,
@@ -15,7 +18,7 @@ const toDTO = (payload: GreecaleCardDTO): ICardDTO => {
 
 const toSensitiveDTO = (
   payload: GrecaleCardSensitiveDTO,
-): ICardSensitiveDTO => {
+): IBCCCardSensitiveDTO => {
   return {
     idCorecard: payload.proxy,
     status: payload.status,

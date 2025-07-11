@@ -12,6 +12,7 @@ import {
   IBCCCardDTO,
   IBCCCardSensitiveDTO,
 } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/card";
+import { IBCCUpdateCardStatusDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/dtos/update-status";
 
 export class CorecardCardService implements IBCCCard {
   constructor(private client: GrecaleClient) {}
@@ -44,5 +45,19 @@ export class CorecardCardService implements IBCCCard {
     return cards;
   }
 
-  async changeStatus(params: IUpdateCardStatusDTO): Promise<boolean> {}
+  async changeStatus(params: IBCCUpdateCardStatusDTO): Promise<boolean> {
+    if (params.card.status === params.newStatus) {
+      throw new Error("Status é o mesmo.");
+    }
+
+    const token = await this.client.authenticate();
+
+    await this.client.cards.updateStatusByProxy(
+      params.card.idCorecard,
+      params.newStatus,
+      { token },
+    );
+
+    return true;
+  }
 }

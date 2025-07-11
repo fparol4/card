@@ -4,7 +4,7 @@ import { logger } from "@src/greecale/utils";
 import * as mocks from "@tests/mocks/";
 import { settings } from "@tests/misc/settings";
 import { IBCCCardDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/card";
-import { IBCCAccountDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/account";
+import { IBCCAccountInfoDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/account";
 import {
   IBCCCardBrand,
   IBCCCardHolderType,
@@ -18,7 +18,7 @@ function generateRandomCpf() {
 
 describe("SDK > Buscar todos os cartões de um usuário", () => {
   let card1: IBCCCardDTO;
-  let account: IBCCAccountDTO;
+  let account: IBCCAccountInfoDTO;
 
   beforeAll(async () => {
     const sdk = new GrecaleSDK(settings);
@@ -50,4 +50,3 @@ describe("SDK > Buscar todos os cartões de um usuário", () => {
     expect(cards[0].idCorecard).toBe(card1.idCorecard);
   });
 });
-

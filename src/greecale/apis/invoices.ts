@@ -13,13 +13,12 @@ import {
   IGetInvoiceDetailByProxyResponse,
   IUpdateDueDateByProxyParams,
   IUpdateDueDateByProxyBody,
-  IUpdateDueDateByProxyResponse
+  IUpdateDueDateByProxyResponse,
 } from "../types/invoice.types";
 
 export class InvoicesApi {
   constructor(public client: AxiosInstance) {}
 
-  // Extrato por proxy
   public async getStatementByProxy(
     params: IGetStatementByProxyParams,
     options?: SDKRequestOptions,
@@ -40,7 +39,6 @@ export class InvoicesApi {
     }
   }
 
-  // Faturas abertas por proxy
   public async getOpenInvoicesByProxy(
     params: IGetOpenInvoicesByProxyParams,
     options?: SDKRequestOptions,
@@ -56,7 +54,6 @@ export class InvoicesApi {
     }
   }
 
-  // Faturas fechadas por proxy
   public async getClosedInvoicesByProxy(
     params: IGetClosedInvoicesByProxyParams,
     options?: SDKRequestOptions,
@@ -72,7 +69,6 @@ export class InvoicesApi {
     }
   }
 
-  // Detalhe da fatura por proxy
   public async getInvoiceDetailsByProxy(
     params: IGetInvoiceDetailByProxyParams,
     options?: SDKRequestOptions,
@@ -82,7 +78,9 @@ export class InvoicesApi {
         periodo: params.periodo.toString(),
         ...(params.pagina ? { pagina: params.pagina } : {}),
       }).toString();
-      const { data } = await this.client.get<IGetInvoiceDetailByProxyResponse[]>(
+      const { data } = await this.client.get<
+        IGetInvoiceDetailByProxyResponse[]
+      >(
         `/faturas/detalhe/proxy/${params.proxy}?${query}`,
         requestOptions(options),
       );
@@ -92,7 +90,6 @@ export class InvoicesApi {
     }
   }
 
-  // Atualizar vencimento por proxy
   public async updateDueDateByProxy(
     params: IUpdateDueDateByProxyParams,
     body: IUpdateDueDateByProxyBody,
