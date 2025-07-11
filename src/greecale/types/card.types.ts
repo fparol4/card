@@ -12,3 +12,12 @@ export type GrecaleCardSensitiveDTO = {
   dataVencimento: string;
   cvc2: string;
 } & GreecaleCardDTO;
+
+export type IUpdateCardStatusByProxyDTO = {
+  proxy: string;
+  body: {
+    codStatus: string;
+  };
+};
+
+export type IUpdateCardStatusByProxyResponse = {};

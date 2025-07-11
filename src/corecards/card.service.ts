@@ -48,10 +48,19 @@ export class CorecardCardService implements ICorecardCardService {
   }
 
   async changeStatus(params: IUpdateCardStatusDTO): Promise<boolean> {
-    if (params.newStatus === CardStatus.CANCELED) {
-      throw new Error("Não é permitido alterar o status para CANCELED");
+    console.log(params);
+    if (params.card.status === params.newStatus) {
+      throw new Error("Status é o mesmo.");
     }
-    // Simula alteração de status (ajuste conforme integração real)
+    
+    const token = await this.client.authenticate();
+    
+    await this.client.cards.updateStatusByProxy(
+      params.card.idCorecard,
+      params.newStatus,
+      { token }
+    );
+    
     return true;
   }
 }
