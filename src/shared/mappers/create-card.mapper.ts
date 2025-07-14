@@ -1,7 +1,9 @@
-import { IBCCAccountType } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/common";
-import { IBCCCardDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/card";
-import { IBCCCreateCardDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/dtos/create";
-import { IBCCCardType } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/enum";
+import {
+  IBCCAccountType,
+  IBCCCardDTO,
+  IBCCCardType,
+  IBCCCreateCardDTO,
+} from "@bankeiro/bankeiro-backend-corecard";
 import {
   IAddCardHolderDTO,
   IAddCardHolderResDTO,
@@ -10,13 +12,21 @@ import {
 function toClient(params: IBCCCreateCardDTO): IAddCardHolderDTO {
   const { account, holder, type, brand } = params;
 
+  const [name, ...lastname] = account.name.split(" ");
+  const lastName = lastname.join(" ");
+  const birthDate = account.birthDate.replace(/\D/g, "");
+
+  const accountType = account.type === IBCCAccountType.PF ? "50" : "52";
+  const cardType = params.type === IBCCCardType.PHYSICAL ? "1" : "4";
+  const emboss = params.type === IBCCCardType.PHYSICAL ? "S" : "N";
+
   return {
     // Dados pessoais
-    nome: account.name,
-    nomeCompleto: account.name + account.lastName,
+    nome: name,
+    nomeCompleto: account.name,
+    sobreNome: lastName,
     nomeSocial: holder.name,
-    sobreNome: account.lastName,
-    dataNascimento: account.birthDate,
+    dataNascimento: birthDate,
     email: account.email,
     estadoCivil: "0",
     nacionalidade: "BRASILEIRO",
@@ -25,20 +35,20 @@ function toClient(params: IBCCCreateCardDTO): IAddCardHolderDTO {
     sexo: account.gender,
 
     // CONTATO
-    telefone: account.contact.phone.number,
-    telefoneComercial: account.contact.phone.number,
-    celular: account.contact.mobile.number,
+    telefone: account.contact.phone,
+    telefoneComercial: account.contact.phone,
+    celular: account.contact.mobile,
 
     // DOCUMENTOS
-    cpf: account.cpf || "00000000000",
-    rg: account.rg || "0",
+    cpf: account.cpf || "000",
+    rg: account.rg || "000",
     orgaoEmissorRG: account.rgIssuingAuthority || "SSP",
     estadoEmissorRG: account.rgIssuingState || "SP",
-    cnpjCorrespondente: account.cnpj || "0",
+    cnpjCorrespondente: account.cnpj || "000",
 
     // Endereço|
     logradouro: account.address.street,
-    numero: "123", // mock
+    numero: account.address.number,
     complemento: account.address.complement || "",
     referencia: account.address.reference || "",
     bairro: account.address.neighborhood,
@@ -55,33 +65,34 @@ function toClient(params: IBCCCreateCardDTO): IAddCardHolderDTO {
     dataAdmissao: "20220101",
     salario: 5000,
 
+    // Banco
+    codigoBanco: "1", // account.bank.code,
+    codigoAgencia: account.bank.agency,
+    codigoContaCorrente: account.bank.account,
+    digitoContaCorrente: account.bank.digit,
+
     // Produto e cartão
-    produto: account.type === IBCCAccountType.PF ? "50" : "52",
-    tipoCartao: params.type === IBCCCardType.PHYSICAL ? "1" : "4",
+    produto: accountType,
+    tipoCartao: cardType,
+    geraEmbossing: emboss,
+    permiteAssociacaoMultipla: true,
     limiteCredito: "0",
     geraSenhaAtivacao: "1",
     codigoEntregadora: "11",
     codigoPlastico: "0",
-    codigoVencimentoFatura: 1,
-    geraEmbossing: params.type === IBCCCardType.PHYSICAL ? "S" : "N",
-    tipoEnvioFatura: "E", // todo
-    tipoPlastico: "N", // todo
+    codigoVencimentoFatura: "1",
+    tipoEnvioFatura: "E",
+    tipoPlastico: "N",
     ga: "1",
     embossadora: "84",
     proxy: "0",
     RMC: "0",
-
-    // Banco
-    codigoBanco: Number(account.bank.code),
-    codigoAgencia: Number(account.bank.agency),
-    codigoContaCorrente: account.bank.account,
-    digitoContaCorrente: account.bank.digit,
   };
 }
 
 export const toSdk = (payload: IAddCardHolderResDTO): IBCCCardDTO => {
   return {
-    idCorecard: payload.proxy,
+    idCorecard: payload.cartao,
     context: {
       conta: "494",
     },

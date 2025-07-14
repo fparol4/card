@@ -10,7 +10,7 @@ import { CardSecurityApi } from "./apis/card-security";
 import { requestOptions } from "./utils";
 import { SDKError } from "@src/shared/error";
 import { SDKAuthResDTO } from "./types/common";
-import { IBCCSettings } from "@bankeiro/bankeiro-backend-corecard/src";
+import { IBCCSettings } from "@bankeiro/bankeiro-backend-corecard";
 
 export class GrecaleClient {
   private client: AxiosInstance;

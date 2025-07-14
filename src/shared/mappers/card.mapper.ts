@@ -1,26 +1,27 @@
 import {
   IBCCCardDTO,
   IBCCCardSensitiveDTO,
-} from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/card";
+} from "@bankeiro/bankeiro-backend-corecard";
+
 import {
-  GrecaleCardSensitiveDTO,
-  GreecaleCardDTO,
+  IGrecaleCardSensitiveDTO,
+  IGreecaleCardDTO,
 } from "@src/greecale/types/card.types";
 
 export const toClient = () => {};
 
-const toDTO = (payload: GreecaleCardDTO): IBCCCardDTO => {
+const toDTO = (payload: IGreecaleCardDTO): IBCCCardDTO => {
   return {
-    idCorecard: payload.proxy,
+    idCorecard: payload.id,
     status: payload.status,
   };
 };
 
 const toSensitiveDTO = (
-  payload: GrecaleCardSensitiveDTO,
+  payload: IGrecaleCardSensitiveDTO,
 ): IBCCCardSensitiveDTO => {
   return {
-    idCorecard: payload.proxy,
+    idCorecard: payload.id,
     status: payload.status,
     number: payload.cartao,
     cvv: payload.cvc2,

@@ -3,11 +3,12 @@ import { CryptApi } from "./crypt";
 import { SDKRequestOptions } from "../types/common";
 import { SDKError } from "@src/shared/error";
 import { requestOptions } from "../utils";
-import { IBCCCardStatus } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/enum";
 import {
-  GrecaleCardSensitiveDTO,
+  IGrecaleCardSensitiveDTO,
   IUpdateCardStatusByProxyResponse,
 } from "../types/card.types";
+
+import { IBCCCardStatus } from "@bankeiro/bankeiro-backend-corecard";
 
 export const GrecaleStatus = {
   [IBCCCardStatus.CREATING]: 1,
@@ -28,6 +29,19 @@ export class CardApi {
     try {
       const { data: card } = await this.client.get(
         `/cartao/proxy/${proxy}`,
+        requestOptions(options),
+      );
+
+      return this._getSensitive(card, options);
+    } catch (error) {
+      throw new SDKError("get card by proxy > error", error);
+    }
+  }
+
+  public async getById(id: string, options?: SDKRequestOptions) {
+    try {
+      const { data: card } = await this.client.get<IGrecaleCardSensitiveDTO>(
+        `/cartao/${id}`,
         requestOptions(options),
       );
 
@@ -61,11 +75,12 @@ export class CardApi {
   }
 
   private async _getSensitive(
-    card: GrecaleCardSensitiveDTO,
+    card: IGrecaleCardSensitiveDTO,
     options?: SDKRequestOptions,
   ) {
     return {
       ...card,
+      id: card.cartao,
       cartao: await this.crypto.decrypt(card.cartao, options),
       dataVencimento: await this.crypto.decrypt(card.dataVencimento, options),
       cvc2: await this.crypto.decrypt(card.cvc2, options),

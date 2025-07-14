@@ -1,4 +1,6 @@
-export type GreecaleCardDTO = {
+export type IGreecaleCardDTO = {
+  id: string;
+  cartao: string;
   proxy: string;
   nome: string;
   tipoDocumento: number;
@@ -7,11 +9,11 @@ export type GreecaleCardDTO = {
   descricaoStatus: string;
 };
 
-export type GrecaleCardSensitiveDTO = {
+export type IGrecaleCardSensitiveDTO = {
   cartao: string;
   dataVencimento: string;
   cvc2: string;
-} & GreecaleCardDTO;
+} & IGreecaleCardDTO;
 
 export type IUpdateCardStatusByProxyDTO = {
   proxy: string;
