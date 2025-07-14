@@ -26,8 +26,9 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "isolatedModules": true,
+    "declarationMap": true,
     "strict": true,
     "skipLibCheck": true
-  }
+  },
+  "exclude": ["src/__tests__/**"]
 }
