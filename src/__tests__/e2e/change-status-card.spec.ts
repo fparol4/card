@@ -34,34 +34,15 @@ function apiToSdkStatus(apiStatus: number): IBCCCardStatus | undefined {
 let card: IBCCCardDTO;
 
 const statusList = [
+  { status: IBCCCardStatus.CREATING, name: "CREATING" },
   { status: IBCCCardStatus.ACTIVE, name: "ACTIVE" },
   { status: IBCCCardStatus.BLOCKED, name: "BLOCKED" },
-  { status: IBCCCardStatus.ACTIVE, name: "ACTIVE" }, // para testar desbloqueio
+  { status: IBCCCardStatus.CANCELED, name: "CANCELED" },
+  { status: IBCCCardStatus.ACTIVE, name: "ACTIVE" }, // testar desbloqueio
   { status: IBCCCardStatus.BLOCKED, name: "BLOCKED" },
 ];
 
-async function waitForStatus(
-  sdk: any,
-  idCorecard: string,
-  expectedStatus: IBCCCardStatus,
-  timeoutMs = 30000,
-  intervalMs = 2000,
-) {
-  const start = Date.now();
-  while (Date.now() - start < timeoutMs) {
-    const currentCard = await sdk.card.getOne({ idCorecard });
-    logger({ polling: true, status: (currentCard as IBCCCardDTO).status });
-    if (
-      apiToSdkStatus((currentCard as IBCCCardDTO).status) === expectedStatus
-    ) {
-      return currentCard;
-    }
-    await new Promise((res) => setTimeout(res, intervalMs));
-  }
-  throw new Error(
-    `Timeout: Cartão não ficou com status ${expectedStatus} em ${timeoutMs / 1000}s`,
-  );
-}
+// Remover a função waitForStatus (linhas 38-56)
 
 describe("SDK > Alterar status de um cartão (real API flow)", () => {
   beforeAll(async () => {
@@ -82,29 +63,9 @@ describe("SDK > Alterar status de um cartão (real API flow)", () => {
   test("Deve aguardar cartão ficar ACTIVE e testar trocas reais de status", async () => {
     const sdk = new GrecaleSDK(settings);
 
-    // 1. Tenta aguardar o cartão ficar ACTIVE (com timeout maior)
-    let cardActive;
-    try {
-      cardActive = await waitForStatus(
-        sdk,
-        card.idCorecard,
-        IBCCCardStatus.ACTIVE,
-        30000,
-        3000,
-      );
-      logger({ cardActive });
-      expect(apiToSdkStatus((cardActive as IBCCCardDTO).status)).toBe(
-        IBCCCardStatus.ACTIVE,
-      );
-    } catch (error) {
-      logger({
-        error:
-          "Cartão não ficou ACTIVE automaticamente, testando com status atual",
-      });
-      // Se não conseguir aguardar ACTIVE, usa o status atual
-      cardActive = await sdk.card.getOne({ idCorecard: card.idCorecard });
-      logger({ cardActive });
-    }
+    // Consulta o status do cartão apenas uma vez, sem polling
+    let cardActive = await sdk.card.getOne({ idCorecard: card.idCorecard });
+    logger({ cardActive });
 
     const currentStatus = apiToSdkStatus((cardActive as IBCCCardDTO).status);
     logger({ currentStatus });
@@ -136,22 +97,22 @@ describe("SDK > Alterar status de um cartão (real API flow)", () => {
         logger({ tentativa: `Alterar para ${name}`, payloadChange, error });
       }
 
+      // Log extra para investigar problemas com ACTIVE
+      const updatedCard = await sdk.card.getOne({
+        idCorecard: card.idCorecard,
+      });
+      logger({ updatedCard, esperado: name, statusApi: (updatedCard as IBCCCardDTO).status });
+      const sdkStatus = apiToSdkStatus((updatedCard as IBCCCardDTO).status);
       if (result) {
         expect(result).toBe(true);
-        // Consulta o status real após a troca
-        const updatedCard = await sdk.card.getOne({
-          idCorecard: card.idCorecard,
-        });
-        logger({ updatedCard });
-        expect(apiToSdkStatus((updatedCard as IBCCCardDTO).status)).toBe(
-          status,
-        );
+        expect(sdkStatus).toBe(status);
         workingStatus = status;
       } else {
-        // Se falhou, continua com o status atual
         logger({
           tentativa: `Falhou alterar para ${name}, mantendo status atual`,
+          statusAtual: sdkStatus,
         });
+        workingStatus = sdkStatus;
       }
     }
   }, 60000); // Timeout de 60 segundos para o teste

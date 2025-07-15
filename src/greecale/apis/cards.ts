@@ -40,7 +40,7 @@ export class CardApi {
 
   public async getById(id: string, options?: SDKRequestOptions) {
     try {
-      const { data: card } = await this.client.get<IGrecaleCardSensitiveDTO>(
+      const { data: card } = await this.client.get(
         `/cartao/${id}`,
         requestOptions(options),
       );
@@ -64,6 +64,29 @@ export class CardApi {
 
       await this.client.put<IUpdateCardStatusByProxyResponse>(
         `/cartao/proxy/${proxy}/status`,
+        { codStatus: String(codStatus) },
+        requestOptions(options),
+      );
+
+      return true;
+    } catch (error) {
+      throw new SDKError("change card status > error", error);
+    }
+  }
+
+  public async updateStatusById(
+    id: string,
+    newStatus: IBCCCardStatus,
+    options?: SDKRequestOptions,
+  ): Promise<boolean> {
+    try {
+      const codStatus = GrecaleStatus[newStatus];
+      if (!codStatus) {
+        throw new Error(`Status não mapeado: ${newStatus}`);
+      }
+
+      await this.client.put(
+        `/cartao/${id}/status`,
         { codStatus: String(codStatus) },
         requestOptions(options),
       );

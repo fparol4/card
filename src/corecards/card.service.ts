@@ -45,11 +45,8 @@ export class CorecardCardService extends IBCCCard {
   }
 
   async changeStatus(params: IBCCUpdateCardStatusDTO): Promise<boolean> {
-    if (params.card.status === params.newStatus) {
-      throw new Error("Status é o mesmo.");
-    }
     const token = await this.client.authenticate();
-    await this.client.cards.updateStatusByProxy(
+    await this.client.cards.updateStatusById(
       params.card.idCorecard,
       params.newStatus,
       { token },
