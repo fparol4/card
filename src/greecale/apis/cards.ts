@@ -8,7 +8,7 @@ import {
   IUpdateCardStatusByProxyResponse,
 } from "../types/card.types";
 
-import { IBCCCardStatus } from "@bankeiro/bankeiro-backend-corecard";
+import { IBCCCardStatus } from "@bankeiro/bankeiro-backend-corecard/";
 
 export const GrecaleStatus = {
   [IBCCCardStatus.CREATING]: 1,
@@ -73,6 +73,30 @@ export class CardApi {
       throw new SDKError("change card status > error", error);
     }
   }
+
+  public async updateStatusById(
+    id: string,
+    newStatus: IBCCCardStatus,
+    options?: SDKRequestOptions,
+  ): Promise<boolean> {
+    try {
+      const codStatus = GrecaleStatus[newStatus];
+      if (!codStatus) {
+        throw new Error(`Status não mapeado: ${newStatus}`);
+      }
+
+      await this.client.put(
+        `/cartao/${id}/status`,
+        { codStatus: String(codStatus) },
+        requestOptions(options),
+      );
+
+      return true;
+    } catch (error) {
+      throw new SDKError("change card status > error", error);
+    }
+  }
+
 
   private async _getSensitive(
     card: GrecaleCardSensitiveDTO,
