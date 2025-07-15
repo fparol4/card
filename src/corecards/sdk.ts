@@ -1,12 +1,12 @@
 import { GrecaleClient } from "@src/greecale/client";
 import { CorecardAccountService } from "./account.service";
 import { CorecardCardService } from "./card.service";
-import { IBCCAccount } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account";
-import { IBCCCard } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card";
 import {
   IBCC,
   IBCCSettings,
-} from "@bankeiro/bankeiro-backend-corecard/src/index";
+  IBCCAccount,
+  IBCCCard,
+} from "@bankeiro/bankeiro-backend-corecard";
 
 export class GrecaleSDK implements IBCC {
   private client: GrecaleClient;

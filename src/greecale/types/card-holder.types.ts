@@ -56,11 +56,11 @@ export interface ICardHolderDTO {
   proxy?: string;
 
   /* Financeiro e Contas */
-  codigoBanco?: number;
-  codigoAgencia?: number;
+  codigoBanco?: string;
+  codigoAgencia?: string;
   codigoContaCorrente?: string;
   digitoContaCorrente?: string;
-  codigoVencimentoFatura: number;
+  codigoVencimentoFatura: string;
   tipoEnvioFatura: string;
   cnpjCorrespondente?: string;
 

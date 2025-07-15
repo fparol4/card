@@ -1,12 +1,14 @@
 {
-  "name": "sdk-corecard-grecale",
+  "name": "@bankeiro/sdk-corecard-grecale",
   "version": "1.0.0",
-  "main": "sdk.ts",
+  "main": "dist/src/corecards/sdk.js",
+  "types": "dist/src/corecards/sdk.d.ts",
   "author": "MBLabs",
   "license": "MIT",
   "scripts": {
     "co:login": "aws codeartifact login --tool npm --repository bankeiro-backend --domain bankeiro --domain-owner 367063506873 --region us-west-2",
     "co:login:dev": "aws codeartifact login --tool npm --repository bankeiro-backend-dev --domain bankeiro --domain-owner 367063506873 --region us-west-2",
+    "build": "rm -rf ./dist; npx tsc && tsc-alias",
     "test": "jest --config jest.config.ts",
     "test:unit": "yarn test --runInBand --verbose",
     "lint": "npx @biomejs/biome lint --write",
@@ -15,7 +17,8 @@
   "dependencies": {
     "@bankeiro/bankeiro-backend-corecard": "file:../sdk-interfaces",
     "@hyperflake/http-errors": "^1.0.0",
-    "axios": "^1.10.0"
+    "axios": "^1.10.0",
+    "tsc-alias": "^1.8.16"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",

@@ -1,21 +1,20 @@
 import { GrecaleClient } from "@src/greecale/client";
 import { createCardMapper } from "@src/shared/mappers/create-card.mapper";
 import { cardMapper } from "@src/shared/mappers/card.mapper";
-
-import { IBCCCard } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/index";
-import { IBCCCreateCardDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/dtos/create";
 import {
-  IBCCGetAllCardsDTO,
-  IBCCGetCardDTO,
-} from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/dtos/get";
-import {
+  IBCCCard,
+  IBCCCreateCardDTO,
   IBCCCardDTO,
+  IBCCGetCardDTO,
   IBCCCardSensitiveDTO,
-} from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/card";
-import { IBCCUpdateCardStatusDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/dtos/update-status";
+  IBCCGetAllCardsDTO,
+  IBCCUpdateCardStatusDTO,
+} from "@bankeiro/bankeiro-backend-corecard";
 
-export class CorecardCardService implements IBCCCard {
-  constructor(private client: GrecaleClient) {}
+export class CorecardCardService extends IBCCCard {
+  constructor(private client: GrecaleClient) {
+    super();
+  }
 
   async create(params: IBCCCreateCardDTO): Promise<IBCCCardDTO> {
     const token = await this.client.authenticate();
@@ -30,7 +29,7 @@ export class CorecardCardService implements IBCCCard {
     params: IBCCGetCardDTO,
   ): Promise<IBCCCardDTO | IBCCCardSensitiveDTO> {
     const token = await this.client.authenticate();
-    const card = await this.client.cards.getByProxy(params.idCorecard, {
+    const card = await this.client.cards.getById(params.idCorecard, {
       token,
     });
     if (params.withSensitive) {
@@ -49,15 +48,12 @@ export class CorecardCardService implements IBCCCard {
     if (params.card.status === params.newStatus) {
       throw new Error("Status é o mesmo.");
     }
-
     const token = await this.client.authenticate();
-
     await this.client.cards.updateStatusByProxy(
       params.card.idCorecard,
       params.newStatus,
       { token },
     );
-
     return true;
   }
 }

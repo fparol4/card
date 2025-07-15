@@ -1,11 +1,15 @@
 import { GrecaleClient } from "@src/greecale/client";
-import { IBCCAccount } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account";
-import { IBCCCreateAccountDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/dtos/create";
-import { IBCCAccountDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/account";
-import { IBCCGetAccountDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/dtos/get";
+import {
+  IBCCAccount,
+  IBCCAccountDTO,
+  IBCCCreateAccountDTO,
+  IBCCGetAccountDTO,
+} from "@bankeiro/bankeiro-backend-corecard";
 
-export class CorecardAccountService implements IBCCAccount {
-  constructor(public client: GrecaleClient) {}
+export class CorecardAccountService extends IBCCAccount {
+  constructor(public client: GrecaleClient) {
+    super();
+  }
 
   /**
    O SDK Grecale registra uma conta junto 

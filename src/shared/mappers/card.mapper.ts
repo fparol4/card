@@ -1,7 +1,8 @@
 import {
   IBCCCardDTO,
   IBCCCardSensitiveDTO,
-} from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/card";
+} from "@bankeiro/bankeiro-backend-corecard";
+
 import {
   GrecaleCardSensitiveDTO,
   GreecaleCardDTO,
