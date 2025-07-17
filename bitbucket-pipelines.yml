@@ -1,0 +1,16 @@
+image: atlassian/default-image:5
+
+pipelines:
+  pull-requests:
+    "**":
+      import: PIPELINE_TEMPLATE_NPM_SDK:main:pull-request-pipeline
+
+  branches:
+    develop:
+      import: PIPELINE_TEMPLATE_NPM_SDK:main:develop-pipeline
+    master:
+      import: PIPELINE_TEMPLATE_NPM_SDK:main:master-pipeline
+
+  custom:
+    scheduled-dependency-upgrade:
+      import: PIPELINE_TEMPLATE_NPM_SDK:main:scheduled-dependency-upgrade
