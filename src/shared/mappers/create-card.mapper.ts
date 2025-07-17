@@ -1,10 +1,10 @@
 import {
   IBCCAccountType,
-  IBCCCardDTO,
+  type IBCCCardDTO,
   IBCCCardType,
-  IBCCCreateCardDTO,
+  type IBCCCreateCardDTO,
 } from "@bankeiro/bankeiro-backend-corecard";
-import {
+import type {
   IAddCardHolderDTO,
   IAddCardHolderResDTO,
 } from "@src/greecale/types/card-holder.types";

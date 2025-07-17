@@ -3,7 +3,7 @@ import { GrecaleSDK } from "@src/corecards/sdk";
 import { logger } from "@src/greecale/utils";
 import * as mocks from "@tests/mocks/";
 import { settings } from "@tests/misc/settings";
-import { IBCCCardDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/card";
+import type { IBCCCardDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/card";
 import {
   IBCCCardStatus,
   IBCCCardBrand,
@@ -64,7 +64,7 @@ describe("SDK > Alterar status de um cartão (real API flow)", () => {
     const sdk = new GrecaleSDK(settings);
 
     // Consulta o status do cartão apenas uma vez, sem polling
-    let cardActive = await sdk.card.getOne({ idCorecard: card.idCorecard });
+    const cardActive = await sdk.card.getOne({ idCorecard: card.idCorecard });
     logger({ cardActive });
 
     const currentStatus = apiToSdkStatus((cardActive as IBCCCardDTO).status);

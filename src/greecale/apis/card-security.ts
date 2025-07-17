@@ -1,8 +1,8 @@
-import { AxiosInstance } from "axios";
+import type { AxiosInstance } from "axios";
 import { requestOptions } from "../utils";
 import { SDKError } from "@src/shared/error";
-import { SDKRequestOptions } from "../types/common";
-import {
+import type { SDKRequestOptions } from "../types/common";
+import type {
   IGetCvvByProxyParams,
   IGetCvvByProxyResponse,
   IValidateCvvByProxyParams,

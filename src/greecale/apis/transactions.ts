@@ -1,35 +1,35 @@
-import { AxiosInstance } from "axios";
+import type { AxiosInstance } from "axios";
 import { requestOptions } from "../utils";
 import { SDKError } from "@src/shared/error";
-import { SDKRequestOptions } from "../types/common";
+import type { SDKRequestOptions } from "../types/common";
 
 import {
-  ITransferByProxyDTO,
-  ITransferByCardDTO,
-  ITransferByProxyResponse,
-  ITransferByCardResponse,
-  IRefundDTO,
-  IRefundResponse,
-  IRefundByCardDTO,
+  type ITransferByProxyDTO,
+  type ITransferByCardDTO,
+  type ITransferByProxyResponse,
+  type ITransferByCardResponse,
+  type IRefundDTO,
+  type IRefundResponse,
+  type IRefundByCardDTO,
   IRefundByCardResponse,
-  IUnloadPrepaidByProxyDTO,
-  IUnloadPrepaidByProxyResponse,
+  type IUnloadPrepaidByProxyDTO,
+  type IUnloadPrepaidByProxyResponse,
   IUnloadPrepaidByCardDTO,
-  IUnloadPrepaidByCardResponse,
-  ILoadByProxyDTO,
-  ILoadByProxyResponse,
-  ILoadByCardDTO,
-  ILoadByCardResponse,
-  IAuthorizationByProxyDTO,
-  IAuthorizationByProxyResponse,
-  IInstallmentAuthorizationByProxyDTO,
-  IInstallmentAuthorizationByProxyResponse,
-  IAuthorizationByCardDTO,
-  IAuthorizationByCardResponse,
-  ITransactionByProxyResponse,
-  IMultiBalanceTransactionByProxyResponse,
-  IMultiBalanceTransactionByCardResponse,
-  ITransactionByCardResponse
+  type IUnloadPrepaidByCardResponse,
+  type ILoadByProxyDTO,
+  type ILoadByProxyResponse,
+  type ILoadByCardDTO,
+  type ILoadByCardResponse,
+  type IAuthorizationByProxyDTO,
+  type IAuthorizationByProxyResponse,
+  type IInstallmentAuthorizationByProxyDTO,
+  type IInstallmentAuthorizationByProxyResponse,
+  type IAuthorizationByCardDTO,
+  type IAuthorizationByCardResponse,
+  type ITransactionByProxyResponse,
+  type IMultiBalanceTransactionByProxyResponse,
+  type IMultiBalanceTransactionByCardResponse,
+  type ITransactionByCardResponse
 } from "../types/transaction.types";
 
 export class TransactionsApi {

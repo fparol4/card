@@ -1,7 +1,7 @@
 import { GrecaleClient } from "@src/greecale/client";
 import { CorecardAccountService } from "./account.service";
 import { CorecardCardService } from "./card.service";
-import {
+import type {
   IBCC,
   IBCCSettings,
   IBCCAccount,

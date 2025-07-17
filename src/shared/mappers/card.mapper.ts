@@ -1,9 +1,9 @@
-import {
+import type {
   IBCCCardDTO,
   IBCCCardSensitiveDTO,
 } from "@bankeiro/bankeiro-backend-corecard";
 
-import {
+import type {
   IGrecaleCardSensitiveDTO,
   IGreecaleCardDTO,
 } from "@src/greecale/types/card.types";

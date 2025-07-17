@@ -3,8 +3,8 @@ import { GrecaleSDK } from "@src/corecards/sdk";
 import { logger } from "@src/greecale/utils";
 import * as mocks from "@tests/mocks/";
 import { settings } from "@tests/misc/settings";
-import { IBCCCardDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/card";
-import { IBCCAccountInfoDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/account";
+import type { IBCCCardDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/card";
+import type { IBCCAccountInfoDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/account";
 import {
   IBCCCardBrand,
   IBCCCardHolderType,

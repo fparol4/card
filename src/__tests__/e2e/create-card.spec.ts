@@ -8,7 +8,7 @@ import {
   IBCCCardHolderType,
   IBCCCardType,
 } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/enum";
-import { IBCCCreateCardDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/dtos/create";
+import type { IBCCCreateCardDTO } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/card/dtos/create";
 
 const input = {
   cpf: "40628606001",

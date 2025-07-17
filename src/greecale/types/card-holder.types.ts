@@ -1,4 +1,4 @@
-import { IBCCAccountGender } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/common";
+import type { IBCCAccountGender } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/common";
 
 export interface ICardHolderDTO {
   /* Produto e Entregadora */

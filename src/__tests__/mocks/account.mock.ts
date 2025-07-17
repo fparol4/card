@@ -1,11 +1,11 @@
 import {
   IBCCAccountDTO,
-  IBCCAccountInfoDTO,
+  type IBCCAccountInfoDTO,
 } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/account";
 import {
-  IBCCAccountContactDTO,
-  IBCCAccountBankDTO,
-  IBCCAccountAddressDTO,
+  type IBCCAccountContactDTO,
+  type IBCCAccountBankDTO,
+  type IBCCAccountAddressDTO,
   IBCCAccountType,
   IBCCAccountInvoiceType,
 } from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/common";

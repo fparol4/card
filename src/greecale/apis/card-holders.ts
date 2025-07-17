@@ -1,9 +1,9 @@
-import { AxiosInstance } from "axios";
-import { SDKRequestOptions } from "../types/common";
+import type { AxiosInstance } from "axios";
+import type { SDKRequestOptions } from "../types/common";
 import { logger, requestOptions } from "../utils";
 import { SDKError } from "@src/shared/error";
 
-import {
+import type {
   ICardHolderDTO,
   IAddCardHolderDTO,
   IUpdateCardHolderDTO,

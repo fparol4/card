@@ -1,14 +1,14 @@
-import { GrecaleClient } from "@src/greecale/client";
+import type { GrecaleClient } from "@src/greecale/client";
 import { createCardMapper } from "@src/shared/mappers/create-card.mapper";
 import { cardMapper } from "@src/shared/mappers/card.mapper";
 import {
   IBCCCard,
-  IBCCCreateCardDTO,
-  IBCCCardDTO,
-  IBCCGetCardDTO,
-  IBCCCardSensitiveDTO,
-  IBCCGetAllCardsDTO,
-  IBCCUpdateCardStatusDTO,
+  type IBCCCreateCardDTO,
+  type IBCCCardDTO,
+  type IBCCGetCardDTO,
+  type IBCCCardSensitiveDTO,
+  type IBCCGetAllCardsDTO,
+  type IBCCUpdateCardStatusDTO,
 } from "@bankeiro/bankeiro-backend-corecard";
 
 export class CorecardCardService extends IBCCCard {

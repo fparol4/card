@@ -1,9 +1,9 @@
-import { AxiosInstance } from "axios";
+import type { AxiosInstance } from "axios";
 import { CryptApi } from "./crypt";
-import { SDKRequestOptions } from "../types/common";
+import type { SDKRequestOptions } from "../types/common";
 import { SDKError } from "@src/shared/error";
 import { requestOptions } from "../utils";
-import {
+import type {
   IGrecaleCardSensitiveDTO,
   IUpdateCardStatusByProxyResponse,
 } from "../types/card.types";

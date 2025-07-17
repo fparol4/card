@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { type AxiosInstance } from "axios";
 
 import { CardHoldersApi } from "./apis/card-holders";
 import { CardApi } from "./apis/cards";
@@ -9,8 +9,8 @@ import { TransactionsApi } from "./apis/transactions";
 import { CardSecurityApi } from "./apis/card-security";
 import { requestOptions } from "./utils";
 import { SDKError } from "@src/shared/error";
-import { SDKAuthResDTO } from "./types/common";
-import { IBCCSettings } from "@bankeiro/bankeiro-backend-corecard";
+import type { SDKAuthResDTO } from "./types/common";
+import type { IBCCSettings } from "@bankeiro/bankeiro-backend-corecard";
 
 export class GrecaleClient {
   private client: AxiosInstance;

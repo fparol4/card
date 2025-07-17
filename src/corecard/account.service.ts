@@ -1,9 +1,9 @@
-import { GrecaleClient } from "@src/greecale/client";
+import type { GrecaleClient } from "@src/greecale/client";
 import {
   IBCCAccount,
-  IBCCAccountDTO,
-  IBCCCreateAccountDTO,
-  IBCCGetAccountDTO,
+  type IBCCAccountDTO,
+  type IBCCCreateAccountDTO,
+  type IBCCGetAccountDTO,
 } from "@bankeiro/bankeiro-backend-corecard";
 
 export class CorecardAccountService extends IBCCAccount {
@@ -19,17 +19,15 @@ export class CorecardAccountService extends IBCCAccount {
    mantemos a implementação do método. 
    */
   public async create(params: IBCCCreateAccountDTO): Promise<IBCCAccountDTO> {
-    // Retorna uma conta mockada
     return {
-      idCorecard: "mocked-account-id",
+      idCorecard: "N/A",
       context: {},
     };
   }
 
   public async getOne(params: IBCCGetAccountDTO): Promise<IBCCAccountDTO> {
-    // Retorna uma conta mockada com o id solicitado
     return {
-      idCorecard: params.idCorecard || "mocked-account-id",
+      idCorecard: "N/A",
       context: {},
     };
   }

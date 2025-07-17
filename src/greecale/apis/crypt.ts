@@ -1,6 +1,6 @@
 import crypto from "crypto";
-import { AxiosInstance } from "axios";
-import { AESKey, CRIPT_ALGORITHM, SDKRequestOptions } from "../types/common";
+import type { AxiosInstance } from "axios";
+import { type AESKey, CRIPT_ALGORITHM, type SDKRequestOptions } from "../types/common";
 import { requestOptions } from "../utils";
 import { SDKError } from "@src/shared/error";
 
