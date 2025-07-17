@@ -1,0 +1,184 @@
+image: node:20.12.2
+
+definitions:
+  caches:
+    sonar: ~/.sonar
+
+  services:
+    docker:
+      memory: 2048
+      type: docker
+
+  steps:
+    - step: &publish-dev
+        name: '🚀 Release it - DEV'
+        image: node:20.12.2
+        caches:
+          - node
+        script:
+          # configure machine
+          - apt-get update && apt-get install -y python3-pip
+          - rm -rf /usr/lib/python3.11/EXTERNALLY-MANAGED
+          - pip3 install rsa
+          - pip3 install awscli
+
+          # login aws
+          - echo "Configurando AWS cli"
+          - aws configure set aws_access_key_id "${AWS_ACCESS_KEY_ID}"
+          - aws configure set aws_secret_access_key "${AWS_SECRET_ACCESS_KEY}"
+          - aws configure set region "us-west-2"
+          - echo "Configurando AWS cli DONE"
+
+          # deploy it
+          - npm run co:login
+          - npm clean-install
+          - npm run build
+          - cp -r package.json ./dist/package.json
+          - cd dist
+          - aws codeartifact login --tool npm --repository bankeiro-backend-dev --domain bankeiro --domain-owner 367063506873 --region us-west-2
+          - npm publish
+
+    - step: &publish-prod
+        name: '🚀 Release it - PROD'
+        image: node:20.12.2
+        caches:
+          - node
+        script:
+          # configure machine
+          - apt-get update && apt-get install -y python3-pip
+          - rm -rf /usr/lib/python3.11/EXTERNALLY-MANAGED
+          - pip3 install rsa
+          - pip3 install awscli
+
+          # login aws
+          - echo "Configurando AWS cli"
+          - aws configure set aws_access_key_id "${AWS_ACCESS_KEY_ID}"
+          - aws configure set aws_secret_access_key "${AWS_SECRET_ACCESS_KEY}"
+          - aws configure set region "us-west-2"
+          - echo "Configurando AWS cli DONE"
+
+          # deploy it
+          - npm run co:login
+          - npm clean-install
+          - npm run build
+          - cp -r package.json ./dist/package.json
+          - cd dist
+          - aws codeartifact login --tool npm --repository bankeiro-backend --domain bankeiro --domain-owner 367063506873 --region us-west-2
+          - npm publish
+
+    - step: &test-code
+        name: "⚙️ Test code"
+        image: node:20.12.2
+        caches:
+          - node
+        script:
+          - apt-get update && apt-get install -y python3-pip
+          - rm -rf /usr/lib/python3.11/EXTERNALLY-MANAGED
+          - pip3 install rsa
+          - pip3 install awscli
+          # login aws
+          - echo "Configurando AWS cli"
+          - aws configure set aws_access_key_id "${AWS_ACCESS_KEY_ID}"
+          - aws configure set aws_secret_access_key "${AWS_SECRET_ACCESS_KEY}"
+          - aws configure set region "us-west-2"
+          - aws codeartifact login --tool npm --repository bankeiro-backend-dev --domain bankeiro --domain-owner 367063506873 --region us-west-2
+          - echo "Configurando AWS cli DONE"
+          - npm run co:login
+          - npm run clean-install
+          - npm run test:coverage
+        artifacts:
+          - coverage/**
+
+    - step: &lint-code
+        name: "💄 Linting code"
+        image: node:20.12.2
+        caches:
+          - node
+        script:
+          - apt-get update && apt-get install -y python3-pip
+          - rm -rf /usr/lib/python3.11/EXTERNALLY-MANAGED
+          - pip3 install rsa
+          - pip3 install awscli
+          # login aws
+          - echo "Configurando AWS cli"
+          - aws configure set aws_access_key_id "${AWS_ACCESS_KEY_ID}"
+          - aws configure set aws_secret_access_key "${AWS_SECRET_ACCESS_KEY}"
+          - aws configure set region "us-west-2"
+          - aws codeartifact login --tool npm --repository bankeiro-backend-dev --domain bankeiro --domain-owner 367063506873 --region us-west-2
+          - echo "Configurando AWS cli DONE"
+          - npm run co:login
+          - npm run clean-install
+          - npm run lint
+
+    - step: &qualify-code
+        name: "🧪 Qualifying code"
+        size: 2x
+        image: node:20.12.2
+        max-time: 5 # value you should use depends on the analysis time for your project
+        caches:
+          - node
+          - sonar
+        script:
+          - pipe: sonarsource/sonarqube-scan:1.2.0
+            variables:
+              SONAR_HOST_URL: ${SONAR_HOST_URL}
+              SONAR_TOKEN: ${SONAR_TOKEN}
+          - pipe: sonarsource/sonarqube-quality-gate:1.1.0
+            variables:
+              SONAR_TOKEN: ${SONAR_TOKEN}
+
+    - step: &security-analysis
+        name: "🔐 Security scanning"
+        size: 2x
+        script:
+          - pipe: atlassian/git-secrets-scan:1.2.1
+
+pipelines:
+  pull-requests:
+    'hotfix/*':
+      - parallel:
+          - step: *test-code
+          - step: *lint-code
+          - step: *qualify-code
+          - step: *security-analysis
+    'bugfix/*':
+      - parallel:
+          - step: *test-code
+          - step: *lint-code
+          - step: *qualify-code
+          - step: *security-analysis
+    'feature/*':
+      - parallel:
+          - step: *test-code
+          - step: *lint-code
+          - step: *qualify-code
+          - step: *security-analysis
+    'release/*':
+      - parallel:
+          - step: *test-code
+          - step: *lint-code
+          - step: *qualify-code
+          - step: *security-analysis
+    'refactor/*':
+      - parallel:
+          - step: *test-code
+          - step: *lint-code
+          - step: *qualify-code
+          - step: *security-analysis
+
+  branches:
+    develop:
+      - parallel:
+          - step: *lint-code
+          - step: *qualify-code
+          - step: *test-code
+          - step: *security-analysis
+      - step: *publish-dev
+
+    master:
+      - parallel:
+          - step: *lint-code
+          - step: *qualify-code
+          - step: *test-code
+          - step: *security-analysis
+      - step: *publish-prod
