@@ -11,6 +11,9 @@
     "build": "rm -rf ./dist; npx tsc && tsc-alias",
     "test": "jest --config jest.config.ts --passWithNoTests",
     "test:unit": "yarn test --runInBand --verbose",
+    "test:coverage": "jest --coverage --passWithNoTests jest.config.ts",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
     "lint": "echo disabled",
     "lint:disabled": "npx @biomejs/biome lint --write",
     "lint:fix:disabled": "npx @biomejs/biome lint --fix"
