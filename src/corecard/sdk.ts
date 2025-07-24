@@ -5,6 +5,7 @@ import {
   IBCC,
   IBCCAccount,
   IBCCCard,
+  IBCCSettings,
 } from "@bankeiro/bankeiro-backend-corecard";
 
 export type IGrecaleSDKSettings = {
@@ -18,9 +19,9 @@ export class GrecaleSDK extends IBCC {
   public account: IBCCAccount;
   public card: IBCCCard;
 
-  constructor(settings: IGrecaleSDKSettings) {
+  constructor(settings: IBCCSettings) {
     super(settings);
-    this.client = new GrecaleClient(settings);
+    this.client = new GrecaleClient(settings as IGrecaleSDKSettings);
     this.account = new CorecardAccountService(this.client);
     this.card = new CorecardCardService(this.client);
   }

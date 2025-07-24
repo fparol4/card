@@ -1,6 +1,6 @@
 {
   "name": "@bankeiro/sdk-corecard-grecale",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "dist/src/corecard/sdk.js",
   "types": "dist/src/corecard/sdk.d.ts",
   "author": "MBLabs",
@@ -19,7 +19,7 @@
     "lint:fix:disabled": "npx @biomejs/biome lint --fix"
   },
   "dependencies": {
-    "@bankeiro/bankeiro-backend-corecard": "2.0.0",
+    "@bankeiro/bankeiro-backend-corecard": "2.1.0",
     "@hyperflake/http-errors": "^1.0.0",
     "axios": "^1.10.0",
     "tsc-alias": "^1.8.16"
