@@ -10,11 +10,11 @@ import { CardSecurityApi } from "./apis/card-security";
 import { requestOptions } from "./utils";
 import { SDKError } from "@src/shared/error";
 import type { SDKAuthResDTO } from "./types/common";
-import type { IBCCSettings } from "@bankeiro/bankeiro-backend-corecard";
+import { IGrecaleSDKSettings } from "@src/corecard/sdk";
 
 export class GrecaleClient {
   private client: AxiosInstance;
-  public settings: IBCCSettings;
+  public settings: IGrecaleSDKSettings;
 
   public cards: CardApi;
   public cardSecurity: CardSecurityApi;
@@ -24,9 +24,9 @@ export class GrecaleClient {
   public limitsApi: LimitsApi;
   public transactionsApi: TransactionsApi;
 
-  constructor(settings: IBCCSettings) {
+  constructor(settings: IGrecaleSDKSettings) {
     this.settings = settings;
-    this.client = axios.create({ baseURL: settings.url });
+    this.client = axios.create({ baseURL: settings.CORECARD_URL });
     this.cryptApi = new CryptApi(this.client);
     this.cards = new CardApi(this.client, this.cryptApi);
     this.cardHolders = new CardHoldersApi(this.client);
@@ -38,9 +38,13 @@ export class GrecaleClient {
 
   public async authenticate() {
     try {
+      const payload = {
+        key: this.settings.CORECARD_AUTH_KEY,
+        secret: this.settings.CORECARD_AUTH_SECRET,
+      };
       const { data } = await this.client.post<SDKAuthResDTO>(
         "/autenticacao/token-jwt",
-        this.settings.credentials,
+        payload,
         requestOptions(),
       );
 
