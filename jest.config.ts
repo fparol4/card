@@ -6,7 +6,7 @@ export default {
   preset: "ts-jest",
   testEnvironment: "node",
   verbose: true,
-  collectCoverage: false,
+  collectCoverage: true,
   coverageProvider: "babel",
   coverageDirectory: "coverage",
   testRegex: ".*\.(spec|test|integration\.spec)\\.ts$",

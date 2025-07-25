@@ -1,16 +1,11 @@
 import type { IBCCAccountGender } from "@bankeiro/bankeiro-backend-corecard";
 
 export interface ICardHolderDTO {
-  /* Produto e Entregadora */
   produto: string;
   codigoEntregadora: string;
-
-  /* Detalhes Cartão */
   tipoCartao: string;
   codigoPlastico: string;
   tipoPlastico: string;
-
-  /* Empregador e Contrato */
   codigoEmpregador: number;
   nomeEmpregador: string;
   matricula: string;
@@ -19,8 +14,6 @@ export interface ICardHolderDTO {
   salario?: number;
   limiteCredito?: string;
   geraSenhaAtivacao: string;
-
-  /* Informação Pessoal */
   nomeCompleto: string;
   nome: string;
   sobreNome: string;
@@ -36,8 +29,6 @@ export interface ICardHolderDTO {
   nomePai: string;
   nomeMae: string;
   ga?: string;
-
-  /* Endereço */
   logradouro?: string;
   numero: string;
   complemento?: string;
@@ -47,15 +38,11 @@ export interface ICardHolderDTO {
   cidade: string;
   estado: string;
   pais: string;
-
-  /* Contato */
   telefone: string;
   telefoneComercial?: string;
   celular?: string;
   email: string;
   proxy?: string;
-
-  /* Financeiro e Contas */
   codigoBanco?: string;
   codigoAgencia?: string;
   codigoContaCorrente?: string;
@@ -63,8 +50,6 @@ export interface ICardHolderDTO {
   codigoVencimentoFatura: string;
   tipoEnvioFatura: string;
   cnpjCorrespondente?: string;
-
-  /* Embossadora e Associacao */
   geraEmbossing: string;
   embossadora: string;
   permiteAssociacaoMultipla?: boolean;
@@ -73,7 +58,7 @@ export interface ICardHolderDTO {
 
 export type IAddCardHolderDTO = ICardHolderDTO;
 
-export type IAddCardHolderResDTO = {
+export type CardHolderCreateRes = {
   cartao: string;
   proxy: string;
   dataVencimento: string;
@@ -81,30 +66,25 @@ export type IAddCardHolderResDTO = {
   conta: string;
 };
 
+export type IAddCardHolderResDTO = CardHolderCreateRes;
+export type ICreateCardHolderResponse = CardHolderCreateRes;
+export type INewPortadorResDTO = CardHolderCreateRes;
+
 export interface IUpdateCardHolderDTO {
-  /* Identificação */
   nomeCompleto: string;
   nome: string;
   sobrenome: string;
   nomeEmbossing: string;
-
-  /* Informação Pessoal */
   dataNascimento: string;
   sexo: "M" | "F" | "S";
   estadoCivil: string;
   nacionalidade: string;
-
-  /* Documentos */
   documento: string;
   rg: string;
   orgaoEmissorRG: string;
   estadoEmissorRG: string;
-
-  /* Parental */
   nomeMae: string;
   nomePai: string;
-
-  /* Endereço */
   logradouro: string;
   numero: string;
   complemento: string;
@@ -114,16 +94,13 @@ export interface IUpdateCardHolderDTO {
   estado: string;
   pais: string;
   cep: number;
-
-  /* Contato */
   telefone: string;
   telefoneComercial: string;
   celular: string;
   email: string;
 }
 
-// --- CRIAR PORTADOR --- //
-export interface ICreateCardHolderParams {
+export type CardHolderCreateParams = {
   nome: string;
   nomeCompleto: string;
   sobreNome: string;
@@ -176,12 +153,7 @@ export interface ICreateCardHolderParams {
   codigoContaCorrente: string;
   digitoContaCorrente: string;
   cnpjCorrespondente: string;
-}
+};
 
-export interface ICreateCardHolderResponse {
-  cartao: string;
-  proxy: string;
-  dataVencimento: string;
-  nomeEmbossing: string;
-  conta: string;
-}
+export type ICreateCardHolderParams = CardHolderCreateParams;
+export type INewPortadorDTO = CardHolderCreateParams;
