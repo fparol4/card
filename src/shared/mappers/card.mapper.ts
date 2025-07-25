@@ -6,7 +6,7 @@ import type {
 import type {
   IGrecaleCardSensitiveDTO,
   IGreecaleCardDTO,
-} from "@src/greecale/types/card.types";
+} from "@src/client/types/card.types";
 
 export const toClient = () => {};
 

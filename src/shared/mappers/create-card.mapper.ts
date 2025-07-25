@@ -4,10 +4,11 @@ import {
   IBCCCardType,
   type IBCCCreateCardDTO,
 } from "@bankeiro/bankeiro-backend-corecard";
+
 import type {
   IAddCardHolderDTO,
   IAddCardHolderResDTO,
-} from "@src/greecale/types/card-holder.types";
+} from "@src/client/types/card-holder.types";
 
 function toClient(params: IBCCCreateCardDTO): IAddCardHolderDTO {
   const { account, holder, type, brand } = params;
@@ -23,9 +24,9 @@ function toClient(params: IBCCCreateCardDTO): IAddCardHolderDTO {
   return {
     // Dados pessoais
     nome: name,
-    nomeCompleto: account.name,
     sobreNome: lastName,
-    nomeSocial: holder.name,
+    nomeCompleto: account.name,
+    nomeSocial: account.name,
     dataNascimento: birthDate,
     email: account.email,
     estadoCivil: "0",

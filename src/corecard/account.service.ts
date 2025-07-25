@@ -1,4 +1,4 @@
-import type { GrecaleClient } from "@src/greecale/client";
+import type { GrecaleClient } from "@src/client";
 import {
   IBCCAccount,
   type IBCCAccountDTO,

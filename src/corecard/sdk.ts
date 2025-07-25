@@ -1,4 +1,4 @@
-import { GrecaleClient } from "@src/greecale/client";
+import { GrecaleClient } from "@src/client";
 import { CorecardAccountService } from "./account.service";
 import { CorecardCardService } from "./card.service";
 import {

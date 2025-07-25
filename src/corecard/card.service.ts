@@ -1,11 +1,10 @@
-import type { GrecaleClient } from "@src/greecale/client";
+import type { GrecaleClient } from "@src/client";
 import { createCardMapper } from "@src/shared/mappers/create-card.mapper";
 import { cardMapper } from "@src/shared/mappers/card.mapper";
 import {
   IBCCCard,
   type IBCCCreateCardDTO,
   type IBCCCardDTO,
-  type IBCCGetCardDTO,
   type IBCCCardSensitiveDTO,
   type IBCCGetAllCardsDTO,
   type IBCCUpdateCardStatusDTO,
