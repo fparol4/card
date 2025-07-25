@@ -2,9 +2,9 @@
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
-    "rootDir": "./",
-    "baseUrl": "./",
-    "outDir": "./dist",
+    "baseUrl": ".",
+    "rootDir": "src",
+    "outDir": "dist",
     "target": "ES2022",
     "lib": ["es6", "dom"],
     "types": ["node", "jest"],

@@ -10,7 +10,7 @@ import { CardSecurityApi } from "./apis/card-security";
 import { requestOptions } from "./utils";
 import { SDKError } from "@src/shared/error";
 import type { SDKAuthResDTO } from "./types/common";
-import { IGrecaleSDKSettings } from "@src/corecard/sdk";
+import type { IGrecaleSDKSettings } from "@src/corecard/sdk";
 
 export class GrecaleClient {
   private client: AxiosInstance;

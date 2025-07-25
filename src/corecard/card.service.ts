@@ -9,7 +9,7 @@ import {
   type IBCCCardSensitiveDTO,
   type IBCCGetAllCardsDTO,
   type IBCCUpdateCardStatusDTO,
-  IBCCGetOneCardDTO,
+  type IBCCGetOneCardDTO,
 } from "@bankeiro/bankeiro-backend-corecard";
 
 export class CorecardCardService extends IBCCCard {

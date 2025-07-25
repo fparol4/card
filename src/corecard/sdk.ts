@@ -3,9 +3,9 @@ import { CorecardAccountService } from "./account.service";
 import { CorecardCardService } from "./card.service";
 import {
   IBCC,
-  IBCCAccount,
-  IBCCCard,
-  IBCCSettings,
+  type IBCCAccount,
+  type IBCCCard,
+  type IBCCSettings,
 } from "@bankeiro/bankeiro-backend-corecard";
 
 export type IGrecaleSDKSettings = {
