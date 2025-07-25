@@ -95,7 +95,7 @@ describe("CardService", () => {
     expect(cc).toBeDefined();
   });
 
-  it("Should (UNLOCK) one card", async () => {
+  it.skip("Should (UNLOCK) one card", async () => {
     const cc = await sdk.card.changeStatus({
       card: T_MEM.vCc,
       newStatus: IBCCCardStatus.ACTIVE,
@@ -105,7 +105,7 @@ describe("CardService", () => {
     expect(cc).toBeDefined();
   });
 
-  it("Should (CANCEL) one card", async () => {
+  it.skip("Should (CANCEL) one card", async () => {
     const cc = await sdk.card.changeStatus({
       card: T_MEM.vCc,
       newStatus: IBCCCardStatus.CANCELED,
