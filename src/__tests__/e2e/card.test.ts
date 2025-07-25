@@ -17,13 +17,13 @@ const T_MEM = {} as {
   [key: string]: any;
 };
 
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-beforeEach(async () => {
-  await sleep(1000);
-});
+describe("CardService", () => {
+  beforeEach(async () => {
+    jest.useRealTimers();
+    await new Promise((r) => setTimeout(r, 1000));
+  });
 
-describe("CardService::create", () => {
-  it("Should CREATE new card (VIRTUAL) with success", async () => {
+  it("1. Should CREATE new card (VIRTUAL) with success", async () => {
     const cc = await sdk.card.create({
       account: accountDTOMock,
       brand: IBCCCardBrand.VISA,
@@ -38,7 +38,7 @@ describe("CardService::create", () => {
     expect(cc).toBeDefined();
   });
 
-  it("Should CREATE new card (PHYSICAL) with success", async () => {
+  it("2. Should CREATE new card (PHYSICAL) with success", async () => {
     const cc = await sdk.card.create({
       account: accountDTOMock,
       brand: IBCCCardBrand.VISA,
@@ -52,10 +52,8 @@ describe("CardService::create", () => {
     logger.log("2. Created card (PHYSICAL) ->", { cc });
     expect(cc).toBeDefined();
   });
-});
 
-describe("CardService::get", () => {
-  it("Should GET-ONE card", async () => {
+  it("3. Should GET-ONE card", async () => {
     const cc = await sdk.card.getOne({
       account: accountDTOMock,
       card: {
@@ -66,7 +64,7 @@ describe("CardService::get", () => {
     expect(cc).toBeDefined();
   });
 
-  it("Should GET-ONE (SENSITIVE) card", async () => {
+  it("4. Should GET-ONE (SENSITIVE) card", async () => {
     const cc = await sdk.card.getOne({
       account: accountDTOMock,
       card: {
@@ -74,11 +72,11 @@ describe("CardService::get", () => {
         withSensitive: true,
       },
     });
-    logger.warn("2.2 GET-ONE (SENSIBLE) ->", { cc });
+    logger.log("2.2 GET-ONE (SENSIBLE) ->", { cc });
     expect(cc).toBeDefined();
   });
 
-  it("Should GET-ALL cards", async () => {
+  it("5. Should GET-ALL cards", async () => {
     const ccs = await sdk.card.getAll({
       account: accountDTOMock,
       cards: [T_MEM.vCc, T_MEM.pCc],
@@ -86,40 +84,34 @@ describe("CardService::get", () => {
     logger.log("2.3 GET-ALL ->", { ccs });
     expect(ccs).toBeDefined();
   });
-});
 
-describe("CardService::cancel", () => {
   it("Should (LOCK) one card", async () => {
     const cc = await sdk.card.changeStatus({
       card: T_MEM.vCc,
       newStatus: IBCCCardStatus.BLOCKED,
       reason: "Q.A",
     });
-    logger.log("3.1 Card locked");
+    logger.log("3.1 Card LOCKED");
     expect(cc).toBeDefined();
   });
-});
 
-describe("CardService::unlock", () => {
   it("Should (UNLOCK) one card", async () => {
     const cc = await sdk.card.changeStatus({
       card: T_MEM.vCc,
       newStatus: IBCCCardStatus.ACTIVE,
       reason: "Q.A",
     });
-    logger.log("3.2 Card unlocked");
+    logger.log("3.2 Card UNLOCKED");
     expect(cc).toBeDefined();
   });
-});
 
-describe("CardService::cancel", () => {
   it("Should (CANCEL) one card", async () => {
     const cc = await sdk.card.changeStatus({
       card: T_MEM.vCc,
       newStatus: IBCCCardStatus.CANCELED,
       reason: "Q.A",
     });
-    logger.log("3.3 Card unlocked");
+    logger.log("3.3 Card CANCELED");
     expect(cc).toBeDefined();
   });
 });

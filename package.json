@@ -9,7 +9,7 @@
     "co:login": "aws codeartifact login --tool npm --repository bankeiro-backend --domain bankeiro --domain-owner 367063506873 --region us-west-2",
     "build": "rm -rf ./dist && npx tsc && tsc-alias",
     "test": "jest --config jest.config.ts --runInBand --passWithNoTests",
-    "test:coverage": "npm run test --coverage",
+    "test:coverage": "jest --config jest.config.ts --runInBand --passWithNoTests --coverage",
     "lint": "npx biome lint --write"
   },
   "dependencies": {

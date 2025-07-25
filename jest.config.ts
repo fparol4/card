@@ -12,15 +12,7 @@ export default {
   testRegex: ".*\.(spec|test|integration\.spec)\\.ts$",
   coverageReporters: ["text", "lcov", "html"],
   moduleFileExtensions: ["js", "json", "ts"],
-  collectCoverageFrom: [
-    "src/app/**/*.{ts,js}",
-    "src/shared/utils/*.{ts,js}",
-    "!src/app/exceptions/*.{ts,js}",
-    "!src/**/*.module.{ts,js}",
-    "!src/**/*.(interface|dto|entity|enum|types).{ts,js}",
-    "!src/main.{ts,js}",
-    "!**/*.spec.{ts,js}",
-  ],
+  collectCoverageFrom: ["src/corecard/**/*.{ts,js}"],
   transform: {
     "^.+\\.(ts|tsx)?$": "ts-jest",
   },
