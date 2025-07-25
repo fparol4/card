@@ -1,6 +1,5 @@
 {
-  "include": ["src"],
-  "exclude": ["src/__tests__"],
+  "include": ["src", "__tests__"],
   "compilerOptions": {
     "target": "ES2022",
     "module": "commonjs",
@@ -27,6 +26,8 @@
     "declaration": true,
     "declarationMap": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "preserveConstEnums": true,
+    "isolatedModules": false
   }
 }

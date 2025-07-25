@@ -1,59 +1,34 @@
-import {
-  IBCCAccountDTO,
-  type IBCCAccountInfoDTO,
-} from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/account";
-import {
-  type IBCCAccountContactDTO,
-  type IBCCAccountBankDTO,
-  type IBCCAccountAddressDTO,
-  IBCCAccountType,
-  IBCCAccountInvoiceType,
-} from "@bankeiro/bankeiro-backend-corecard/src/interfaces/account/common";
+import { AccountGender } from "@bankeiro/bankeiro-backend-commons";
+import { IBCCAccountInfoDTO } from "@bankeiro/bankeiro-backend-corecard";
 
-export const accountPF: IBCCAccountInfoDTO = {
-  email: "alice.smith@example.com",
-  name: "Alice",
-  lastName: "Smith",
-  motherName: "Maria Smith",
-  gender: "F",
-  birthDate: "19901205",
-  type: IBCCAccountType.PF,
-  dueDate: "10",
-  invoiceType: IBCCAccountInvoiceType.Email,
-
-  cpf: "47988302086",
-  rg: "12.345.678",
-  rgIssuingState: "SP",
-  rgIssuingAuthority: "SSP",
-
-  occupation: {
-    salary: "3000",
+export const accountDTOMock = {
+  id: "07154cf7-661d-438b-a536-65326c10b28e",
+  idCorecard: "1322", // dock existing account
+  idBankeiro: "07154cf7-661d-438b-a536-65326c10b28e",
+  context: {
+    idMultiApp: "1460",
   },
-  contact: {
-    phone: {
-      areaCode: "11",
-      number: "988887777",
-    },
-    mobile: {
-      areaCode: "11",
-      number: "988887777",
-    },
-  } as IBCCAccountContactDTO,
-
-  bank: {
-    code: "237",
-    agency: "1234",
-    account: "567890",
-    digit: "1",
-  } as IBCCAccountBankDTO,
-
+  email: "luiza.alves@mblabs.com.br",
+  name: "Luiza Alves",
+  motherName: "Bendita Teste",
+  birthDate: "2004-11-09",
+  invoiceType: 1,
+  dueDate: "10",
+  gender: AccountGender.MALE,
+  type: 1,
+  cpf: "04644792071",
+  cnpj: "04644792071",
+  companyName: "N/A",
+  occupation: { salary: "N/A", profession: "N/A", type: "N/A" },
+  bank: { code: "301", account: "49059", agency: "0001", digit: "9" },
   address: {
-    zipcode: "30140071",
-    state: "MG",
-    city: "Belo Horizonte",
-    street: "Av. Afonso Pena",
-    neighborhood: "Centro",
-    complement: "Sala 100",
-    reference: "Próximo ao Museu de Arte",
-  } as IBCCAccountAddressDTO,
-};
+    state: "SP",
+    city: "Monte Mor",
+    neighborhood: "Residencial Parque do Café",
+    street: "Rua José Geraldo Soares",
+    number: "34",
+    zipcode: "13199134",
+    complement: "Casa A",
+  },
+  contact: { phone: "5519997970455", mobile: "5519997970455" },
+} as IBCCAccountInfoDTO;

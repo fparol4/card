@@ -57,14 +57,10 @@ export class CardApi {
     options?: SDKRequestOptions,
   ): Promise<boolean> {
     try {
-      const codStatus = GrecaleStatus[newStatus];
-      if (!codStatus) {
-        throw new Error(`Status não mapeado: ${newStatus}`);
-      }
-
+      const status = this.getStatus(newStatus);
       await this.client.put<IUpdateCardStatusByProxyResponse>(
         `/cartao/proxy/${proxy}/status`,
-        { codStatus: String(codStatus) },
+        { codStatus: String(status) },
         requestOptions(options),
       );
 
@@ -79,22 +75,25 @@ export class CardApi {
     newStatus: IBCCCardStatus,
     options?: SDKRequestOptions,
   ): Promise<boolean> {
+    const status = this.getStatus(newStatus);
     try {
-      const codStatus = GrecaleStatus[newStatus];
-      if (!codStatus) {
-        throw new Error(`Status não mapeado: ${newStatus}`);
-      }
-
       await this.client.put(
         `/cartao/${id}/status`,
-        { codStatus: String(codStatus) },
+        { codStatus: String(status) },
         requestOptions(options),
       );
-
       return true;
     } catch (error) {
       throw new SDKError("change card status > error", error);
     }
+  }
+
+  private getStatus(status: IBCCCardStatus) {
+    const codStatus = GrecaleStatus[status];
+    if (!codStatus) {
+      throw new Error(`Status não mapeado: ${status}`);
+    }
+    return codStatus;
   }
 
   private async _getSensitive(

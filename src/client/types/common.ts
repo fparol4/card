@@ -1,3 +1,8 @@
+export type SDKServerCredentials = {
+  key: string;
+  secret: string;
+};
+
 export type SDKParams = {
   baseURL: string;
   credentials: SDKServerCredentials;
@@ -8,19 +13,11 @@ export type SDKRequestOptions = {
   token?: string;
 };
 
-// --- AUTH ---
-
-export type SDKServerCredentials = {
-  key: string;
-  secret: string;
-};
-
 export type SDKAuthResDTO = {
   token: string;
   expireAt: string;
 };
 
-// --- CRYPTOGRAPHY ---
 export const CRIPT_ALGORITHM = "aes-128-cbc";
 
 export type AESKey = {
@@ -28,10 +25,7 @@ export type AESKey = {
   iv: Buffer;
 };
 
-// -- PORTADOR (CARD-HOLDER) ---
-
 export interface INewPortadorDTO {
-  /* Pessoa */
   nome: string;
   nomeCompleto: string;
   sobreNome: string;
@@ -46,14 +40,10 @@ export interface INewPortadorDTO {
   telefone: string;
   telefoneComercial: string;
   celular: string;
-
-  /* Documento */
   cpf: string;
   rg: string;
   orgaoEmissorRG: string;
   estadoEmissorRG: string;
-
-  /* Endereço */
   logradouro: string;
   numero: string;
   complemento: string;
@@ -63,16 +53,12 @@ export interface INewPortadorDTO {
   cep: string;
   estado: string;
   pais: string;
-
-  /* Empregador */
   nomeEmpregador: string;
   codigoEmpregador: string;
   matricula: string;
   cargo: string;
   dataAdmissao: string;
   salario: string;
-
-  /* Detalhes e Produto do Cartão */
   produto: string;
   tipoCartao: string;
   ga: string;
@@ -87,14 +73,10 @@ export interface INewPortadorDTO {
   tipoPlastico: string;
   proxy: string;
   RMC: string;
-
-  /* Detalhes do Banco */
   codigoBanco: string;
   codigoAgencia: string;
   codigoContaCorrente: string;
   digitoContaCorrente: string;
-
-  /* Correspondente */
   cnpjCorrespondente: string;
 }
 
@@ -105,3 +87,4 @@ export type INewPortadorResDTO = {
   nomeEmbossing: string;
   conta: string;
 };
+

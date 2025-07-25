@@ -9,7 +9,7 @@ export default {
   collectCoverage: false,
   coverageProvider: "babel",
   coverageDirectory: "coverage",
-  testRegex: "no",
+  testRegex: ".*\.(spec|test|integration\.spec)\\.ts$",
   coverageReporters: ["text", "lcov", "html"],
   moduleFileExtensions: ["js", "json", "ts"],
   collectCoverageFrom: [
