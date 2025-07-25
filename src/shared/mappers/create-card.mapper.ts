@@ -93,6 +93,7 @@ function toClient(params: IBCCCreateCardDTO): IAddCardHolderDTO {
 export const toSdk = (payload: IAddCardHolderResDTO): IBCCCardDTO => {
   return {
     idCorecard: payload.cartao,
+    holderName: payload.nomeEmbossing,
     context: {
       conta: "494",
     },

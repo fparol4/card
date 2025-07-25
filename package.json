@@ -19,7 +19,7 @@
     "lint:fix:disabled": "npx @biomejs/biome lint --fix"
   },
   "dependencies": {
-    "@bankeiro/bankeiro-backend-corecard": "2.1.0",
+    "@bankeiro/bankeiro-backend-corecard": "file:../sdk-interfaces",
     "@hyperflake/http-errors": "^1.0.0",
     "axios": "^1.10.0",
     "tsc-alias": "^1.8.16"

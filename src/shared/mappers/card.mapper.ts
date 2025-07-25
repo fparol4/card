@@ -13,6 +13,7 @@ export const toClient = () => {};
 const toDTO = (payload: IGreecaleCardDTO): IBCCCardDTO => {
   return {
     idCorecard: payload.id,
+    holderName: payload.nome,
     status: payload.status,
   };
 };
@@ -21,8 +22,7 @@ const toSensitiveDTO = (
   payload: IGrecaleCardSensitiveDTO,
 ): IBCCCardSensitiveDTO => {
   return {
-    idCorecard: payload.id,
-    status: payload.status,
+    ...toDTO(payload),
     number: payload.cartao,
     cvv: payload.cvc2,
     expiration: payload.dataVencimento,

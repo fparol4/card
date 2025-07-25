@@ -9,6 +9,7 @@ import {
   type IBCCCardSensitiveDTO,
   type IBCCGetAllCardsDTO,
   type IBCCUpdateCardStatusDTO,
+  IBCCGetOneCardDTO,
 } from "@bankeiro/bankeiro-backend-corecard";
 
 export class CorecardCardService extends IBCCCard {
@@ -26,20 +27,22 @@ export class CorecardCardService extends IBCCCard {
   }
 
   async getOne(
-    params: IBCCGetCardDTO,
+    params: IBCCGetOneCardDTO,
   ): Promise<IBCCCardDTO | IBCCCardSensitiveDTO> {
     const token = await this.client.authenticate();
-    const card = await this.client.cards.getById(params.idCorecard, {
+    const card = await this.client.cards.getById(params.card.idCorecard, {
       token,
     });
-    if (params.withSensitive) {
+    if (params.card.withSensitive) {
       return cardMapper.toSensitiveDTO(card);
     }
     return cardMapper.toDTO(card);
   }
 
   async getAll(params: IBCCGetAllCardsDTO): Promise<IBCCCardDTO[]> {
-    const promises = params.cards.map((card) => this.getOne(card));
+    const promises = params.cards.map((card) =>
+      this.getOne({ account: params.account, card }),
+    );
     const cards: IBCCCardDTO[] = await Promise.all(promises);
     return cards;
   }
