@@ -9,9 +9,9 @@ export default {
   collectCoverage: true,
   coverageProvider: "babel",
   coverageDirectory: "coverage",
-  testRegex: ".*\.(spec|test|integration\.spec)\\.ts$",
   coverageReporters: ["text", "lcov", "html"],
   moduleFileExtensions: ["js", "json", "ts"],
+  testMatch: ["<rootDir>/src/__tests__/**/*.(spec|test).ts"],
   collectCoverageFrom: ["<rootDir>/src/corecard/**/*.{ts,js}"],
   coveragePathIgnorePatterns: [
     "<rootDir>/src/client/*",

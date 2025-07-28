@@ -1,9 +1,9 @@
 {
   "author": "MBLabs (Squad Desenvolvimento)",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "name": "@bankeiro/sdk-corecard-grecale",
-  "main": "dist/corecard/sdk.js",
-  "types": "dist/corecard/sdk.d.ts",
+  "main": "corecard/sdk.js",
+  "types": "corecard/sdk.d.ts",
   "license": "MIT",
   "scripts": {
     "co:login": "aws codeartifact login --tool npm --repository bankeiro-backend --domain bankeiro --domain-owner 367063506873 --region us-west-2",
