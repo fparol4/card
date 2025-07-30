@@ -18,11 +18,17 @@ export class CorecardCardService extends IBCCCard {
 
   async create(params: IBCCCreateCardDTO): Promise<IBCCCardDTO> {
     const token = await this.client.authenticate();
-    const payload = createCardMapper.toClient(params);
-    const card = await this.client.cardHolders.addCardHolder(payload, {
+    const payload = createCardMapper.toCardHolder(params);
+    const cardHolder = await this.client.cardHolders.addCardHolder(payload, {
       token,
     });
-    return createCardMapper.toSdk(card);
+    const ccCard = await this.getOne({
+      account: params.account,
+      card: {
+        idCorecard: cardHolder.cartao,
+      },
+    });
+    return ccCard;
   }
 
   async getOne(

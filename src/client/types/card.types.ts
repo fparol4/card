@@ -7,6 +7,7 @@ export type IGreecaleCardDTO = {
   documento: string;
   status: number;
   descricaoStatus: string;
+  lastDigits: string;
 };
 
 export type IGrecaleCardSensitiveDTO = {

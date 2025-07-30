@@ -100,12 +100,16 @@ export class CardApi {
     card: IGrecaleCardSensitiveDTO,
     options?: SDKRequestOptions,
   ) {
-    return {
-      ...card,
-      id: card.cartao,
+    const sensible = {
       cartao: await this.crypto.decrypt(card.cartao, options),
       dataVencimento: await this.crypto.decrypt(card.dataVencimento, options),
       cvc2: await this.crypto.decrypt(card.cvc2, options),
+    };
+    return {
+      ...card,
+      ...sensible,
+      id: card.cartao,
+      lastDigits: sensible.cartao.slice(-4),
     };
   }
 }

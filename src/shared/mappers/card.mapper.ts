@@ -13,8 +13,8 @@ export const toClient = () => {};
 const toDTO = (payload: IGreecaleCardDTO): IBCCCardDTO => {
   return {
     idCorecard: payload.id,
-    holderName: payload.nome,
     status: payload.status,
+    lastDigits: payload.lastDigits,
   };
 };
 

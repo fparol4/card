@@ -1,16 +1,12 @@
 import {
   IBCCAccountType,
-  type IBCCCardDTO,
   IBCCCardType,
   type IBCCCreateCardDTO,
 } from "@bankeiro/bankeiro-backend-corecard";
 
-import type {
-  IAddCardHolderDTO,
-  IAddCardHolderResDTO,
-} from "@src/client/types/card-holder.types";
+import type { IAddCardHolderDTO } from "@src/client/types/card-holder.types";
 
-function toClient(params: IBCCCreateCardDTO): IAddCardHolderDTO {
+function toCardHolder(params: IBCCCreateCardDTO): IAddCardHolderDTO {
   const { account, holder, type, brand } = params;
 
   const [name, ...lastname] = account.name.split(" ");
@@ -91,17 +87,6 @@ function toClient(params: IBCCCreateCardDTO): IAddCardHolderDTO {
   };
 }
 
-export const toSdk = (payload: IAddCardHolderResDTO): IBCCCardDTO => {
-  return {
-    idCorecard: payload.cartao,
-    holderName: payload.nomeEmbossing,
-    context: {
-      conta: "494",
-    },
-  };
-};
-
 export const createCardMapper = {
-  toClient,
-  toSdk,
+  toCardHolder,
 };

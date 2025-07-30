@@ -13,7 +13,7 @@
     "lint": "npx biome lint --write"
   },
   "dependencies": {
-    "@bankeiro/bankeiro-backend-corecard": "^2.3.0",
+    "@bankeiro/bankeiro-backend-corecard": "^2.4.0",
     "@hyperflake/http-errors": "^1.0.0",
     "axios": "^1.10.0",
     "tsc-alias": "^1.8.16"

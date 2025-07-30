@@ -1,5 +1,6 @@
 {
-  "include": ["src", "__tests__"],
+  "include": ["src"],
+  "exclude": ["src/**/__future__/", "src/**/__tests__"],
   "compilerOptions": {
     "target": "ES2022",
     "module": "commonjs",
